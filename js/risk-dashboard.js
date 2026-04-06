@@ -129,7 +129,10 @@ function renderGlobe(conflicts) {
   let html = '';
   for (const [id, pos] of Object.entries(HOTSPOTS)) {
     const color = CONFLICT_COLORS[id] || '#dc2626';
-    html += `<div class="hotspot" style="left:${pos.x}%;top:${pos.y}%;"><div class="hotspot-dot" style="background:${color};box-shadow:0 0 4px ${color}80;"></div></div>`;
+    html += `<div class="hotspot" style="left:${pos.x}%;top:${pos.y}%;" data-conflict="${id}"
+      onmouseenter="document.getElementById('legend-${id}')?.classList.add('legend-highlight')"
+      onmouseleave="document.getElementById('legend-${id}')?.classList.remove('legend-highlight')">
+      <div class="hotspot-dot" style="background:${color};box-shadow:0 0 4px ${color}80;"></div></div>`;
   }
   container.innerHTML = html;
 }
@@ -168,7 +171,7 @@ function renderMapLegend(conflicts) {
 
     const dotColor = CONFLICT_COLORS[id] || '#dc2626';
     html += `
-      <div class="legend-card" style="border-left:3px solid ${dotColor};">
+      <div class="legend-card" id="legend-${id}" style="border-left:3px solid ${dotColor};">
         <div class="legend-dot" style="background:${dotColor};"></div>
         <div class="legend-info">
           <div class="legend-name">${name}</div>
