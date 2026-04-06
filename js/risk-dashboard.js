@@ -60,12 +60,12 @@ const FALLBACK_DATA = {
 
 // Map hotspot positions (% of 960x480 viewBox) + label offsets (matching war dashboard)
 const HOTSPOTS = {
-  russia_ukraine:   { x: 57.8, y: 20.8, lx: 2,   ly: -7 },  // label: right-above
-  iran_israel_us:   { x: 62.7, y: 30.6, lx: 2,   ly: -8 },  // label: right-above
-  israel_palestine: { x: 58.5, y: 31.0, lx: -15,  ly: -5 },  // label: left
-  china_taiwan:     { x: 80.2, y: 35.4, lx: 2,   ly: -7 },  // label: right-above
-  india_pakistan:    { x: 67.7, y: 31.9, lx: 2,   ly: 4 },   // label: right-below
-  us_latam:         { x: 32.9, y: 44.6, lx: 2,   ly: -7 },  // label: right-above
+  russia_ukraine:   { x: 57.8, y: 20.8, lx: 2,   ly: -8 },
+  iran_israel_us:   { x: 62.7, y: 30.6, lx: 3,   ly: -10 },  // right-above
+  israel_palestine: { x: 58.5, y: 31.0, lx: -17, ly: 2 },    // far left-below
+  china_taiwan:     { x: 80.2, y: 35.4, lx: 2,   ly: -8 },
+  india_pakistan:    { x: 67.7, y: 31.9, lx: 3,   ly: 5 },    // right-below
+  us_latam:         { x: 32.9, y: 44.6, lx: 2,   ly: -8 },
 };
 
 // --- Formatting helpers (matching war dashboard _pct / _prob_style) ---
