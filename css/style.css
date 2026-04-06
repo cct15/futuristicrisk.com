@@ -433,6 +433,42 @@ section { padding: 96px 24px; }
   margin-bottom: 4px;
   line-height: 1.5;
 }
+/* Extra risk sections */
+.extra-section { margin-top: 20px; }
+.extra-event-list { list-style: none; padding: 0; }
+.extra-event-item {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.extra-event-item:last-child { border-bottom: none; }
+.extra-event-prob {
+  flex: 0 0 50px;
+  font-size: 18px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  font-family: "SF Mono", "Fira Code", "Menlo", monospace;
+  text-align: right;
+}
+.extra-event-content { flex: 1; }
+.extra-event-headline {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.5;
+}
+.extra-event-meta {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-light);
+}
+.extra-deadline { color: var(--text-muted); }
+.extra-confidence { color: var(--text-light); }
+
 .risk-footer {
   text-align: center;
   color: var(--text-light);

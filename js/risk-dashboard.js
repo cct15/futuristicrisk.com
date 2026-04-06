@@ -247,6 +247,58 @@ function renderMapLegend(conflicts) {
   container.innerHTML = html;
 }
 
+// --- Extra risks (political, natural disaster, economic) ---
+
+const EXTRA_CATEGORIES = {
+  political:         { icon: '🏛', title: '重要政治事件' },
+  natural_disaster:  { icon: '🌊', title: '极端天气与自然灾害' },
+  economic:          { icon: '📊', title: '宏观经济风险' },
+};
+
+function renderExtraRisks(events) {
+  const container = document.getElementById('extra-risks');
+  if (!container || !events || events.length === 0) return;
+
+  // Group by category
+  const groups = {};
+  for (const e of events) {
+    const cat = e.category || 'other';
+    if (!groups[cat]) groups[cat] = [];
+    groups[cat].push(e);
+  }
+
+  let html = '';
+  for (const [cat, items] of Object.entries(groups)) {
+    const meta = EXTRA_CATEGORIES[cat];
+    if (!meta) continue;
+
+    let eventsHTML = '';
+    for (const e of items) {
+      const p = e.probability || 0;
+      const { color } = probStyle(p, 'escalation');
+      const deadline = e.deadline ? `<span class="extra-deadline">截止 ${e.deadline}</span>` : '';
+      const conf = e.data_confidence === 'high' ? '高' : e.data_confidence === 'medium' ? '中' : '低';
+
+      eventsHTML += `
+        <li class="extra-event-item">
+          <span class="extra-event-prob" style="color:${color}">${fmtPct(p)}</span>
+          <div class="extra-event-content">
+            <span class="extra-event-headline">${e.event_summary || ''}</span>
+            <div class="extra-event-meta">${deadline}<span class="extra-confidence">置信度: ${conf}</span></div>
+          </div>
+        </li>`;
+    }
+
+    html += `
+      <section class="conflict-section extra-section">
+        <div class="section-header"><h2>${meta.icon} ${meta.title}</h2></div>
+        <ul class="extra-event-list">${eventsHTML}</ul>
+      </section>`;
+  }
+
+  container.innerHTML = html;
+}
+
 // --- Load data ---
 
 async function loadRiskDashboard() {
@@ -277,6 +329,16 @@ async function loadRiskDashboard() {
     const d = new Date(data.metadata.updated_at);
     tsEl.textContent = d.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
   }
+
+  // Fetch and render extra risks (political events, disasters, economic)
+  try {
+    const extraUrl = 'https://raw.githubusercontent.com/cct15/war-dashboard-data/main/political_events.json';
+    let extraResp = await fetch(extraUrl);
+    if (extraResp.ok) {
+      const extraData = await extraResp.json();
+      renderExtraRisks(extraData.events || []);
+    }
+  } catch (e) { /* non-critical, skip silently */ }
 }
 
 document.addEventListener('DOMContentLoaded', loadRiskDashboard);
