@@ -220,9 +220,10 @@ section { padding: 96px 24px; }
   transition: box-shadow .2s, transform .2s, background .2s;
 }
 .legend-highlight {
-  box-shadow: 0 4px 16px rgba(0,0,0,.12);
-  transform: translateY(-2px);
-  background: var(--bg-alt);
+  box-shadow: 0 6px 24px rgba(0,102,204,.25);
+  transform: translateY(-3px) scale(1.03);
+  background: #eef4ff;
+  border-color: var(--accent);
 }
 .legend-dot {
   width: 8px;
