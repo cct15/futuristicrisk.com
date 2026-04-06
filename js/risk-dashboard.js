@@ -321,10 +321,11 @@ async function loadRiskDashboard() {
   renderGlobe(conflicts);
   renderMapLegend(conflicts);
 
-  // Render full conflict sections (briefing + prob cards + risk impact)
+  // Render full conflict sections — only featured conflicts (matches daily report filter)
+  const featured = conflicts.filter(c => c.featured !== false);
   const dashEl = document.getElementById('risk-dashboard');
   if (dashEl) {
-    dashEl.innerHTML = conflicts.map(renderCard).join('');
+    dashEl.innerHTML = featured.map(renderCard).join('');
   }
 
   const tsEl = document.getElementById('risk-updated');
