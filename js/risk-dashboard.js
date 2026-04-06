@@ -102,10 +102,10 @@ function renderCard(c) {
   const mainEvent = (c.risk_events || []).find(e => e.event_type === 'escalation' || e.event_type === 'ceasefire_cancel');
   const mainLabel = mainEvent ? (EVENT_LABELS[mainEvent.event_type] || '') : '';
 
-  // Composite score for bar
-  const score = c.composite_risk_score || 0;
-  const barPct = Math.min(score * 100 / 0.3, 100); // 0.3 = high threshold
-  const barColor = c.risk_level === 'high' ? 'var(--risk-high)' : c.risk_level === 'medium' ? 'var(--risk-medium)' : 'var(--accent)';
+  // Bar driven by probability_30d (max ~30% for visual scale)
+  const p30 = c.probability_30d || 0;
+  const barPct = Math.min(p30 * 100 / 0.3, 100);
+  const barColor = p30 >= 0.15 ? 'var(--risk-high)' : p30 >= 0.05 ? 'var(--risk-medium)' : 'var(--accent)';
 
   return `
     <div class="risk-card risk-card--${badgeClass}">
@@ -125,7 +125,7 @@ function renderCard(c) {
           <div class="risk-bar-fill" style="width:${barPct}%;background:${barColor};"></div>
         </div>
         <div class="risk-bar-labels">
-          <span>综合评分 ${(score * 100).toFixed(0)}</span>
+          <span></span>
           <span>7天 ${formatProb(c.probability_7d)} · 1天 ${formatProb(c.probability_1d)}</span>
         </div>
       </div>
