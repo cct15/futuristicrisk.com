@@ -58,14 +58,14 @@ const FALLBACK_DATA = {
   ]
 };
 
-// Globe hotspot positions
+// Map hotspot positions (% of 960x480 viewBox, matching war dashboard map_paths.py HOTSPOTS)
 const HOTSPOTS = {
-  russia_ukraine:   { x: 56, y: 24, dir: 'right' },
-  iran_israel_us:   { x: 55, y: 40, dir: 'left' },
-  israel_palestine: { x: 50, y: 47, dir: 'left' },
-  china_taiwan:     { x: 80, y: 35, dir: 'right' },
-  india_pakistan:    { x: 70, y: 46, dir: 'right' },
-  us_latam:         { x: 28, y: 58, dir: 'left' },
+  russia_ukraine:   { x: 57.8, y: 20.8, dir: 'right' },   // (555,100) / 960,480
+  iran_israel_us:   { x: 62.7, y: 30.6, dir: 'right' },   // (602,147)
+  israel_palestine: { x: 58.5, y: 31.0, dir: 'left' },    // (562,149)
+  china_taiwan:     { x: 80.2, y: 35.4, dir: 'right' },   // (770,170)
+  india_pakistan:    { x: 67.7, y: 31.9, dir: 'right' },   // (650,153)
+  us_latam:         { x: 32.9, y: 44.6, dir: 'left' },    // (316,214)
 };
 
 // --- Formatting helpers (matching war dashboard _pct / _prob_style) ---
