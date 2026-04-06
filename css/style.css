@@ -199,19 +199,7 @@ section { padding: 96px 24px; }
   z-index: 3;
   pointer-events: none;
 }
-/* Label placement — large offsets to clear the dot and other labels */
-.hotspot-right {
-  left: 16px;
-  top: -16px;
-}
-.hotspot-left {
-  right: 16px;
-  top: -2px;
-}
-.hotspot-below {
-  left: 16px;
-  top: 18px;
-}
+/* Label positioned via inline style (px offset from dot) */
 .hotspot-name {
   font-size: 9px;
   font-weight: 600;

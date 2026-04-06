@@ -62,13 +62,14 @@ const FALLBACK_DATA = {
 // Dot positions (% of map) + label direction + short display name
 // Coordinates: real geography (from map_paths.py HOTSPOTS / 960x480)
 // Label direction chosen to avoid overlap
+// Dot = real geography. Label = offset position (px from dot) to avoid overlap.
 const HOTSPOTS = {
-  russia_ukraine:   { x: 57.8, y: 20.8, dir: 'left',  short: '俄乌' },       // label left to avoid伊朗
-  iran_israel_us:   { x: 62.7, y: 30.6, dir: 'right', short: '伊朗-美以' },   // label right
-  israel_palestine: { x: 58.5, y: 31.0, dir: 'left',  short: '以巴/黎' },     // label left
-  china_taiwan:     { x: 80.2, y: 35.4, dir: 'left',  short: '台海' },        // label LEFT to avoid edge
-  india_pakistan:    { x: 67.7, y: 31.9, dir: 'below', short: '印巴' },        // label below
-  us_latam:         { x: 32.9, y: 44.6, dir: 'right', short: '美-拉美' },
+  russia_ukraine:   { x: 57.8, y: 20.8, lx: -120, ly: -30, short: '俄乌' },
+  iran_israel_us:   { x: 62.7, y: 30.6, lx: 20,   ly: -35, short: '伊朗-美以' },
+  israel_palestine: { x: 58.5, y: 31.0, lx: -140, ly: 5,   short: '以巴/黎' },
+  china_taiwan:     { x: 80.2, y: 35.4, lx: 20,   ly: -10, short: '台海' },
+  india_pakistan:    { x: 67.7, y: 31.9, lx: 20,   ly: 20,  short: '印巴' },
+  us_latam:         { x: 32.9, y: 44.6, lx: 20,   ly: -10, short: '美-拉美' },
 };
 
 // --- Formatting helpers (matching war dashboard _pct / _prob_style) ---
@@ -134,7 +135,10 @@ function renderGlobe(conflicts) {
     html += `
       <div class="hotspot" style="left:${pos.x}%;top:${pos.y}%;">
         <div class="hotspot-dot"></div>
-        <div class="hotspot-label hotspot-${pos.dir}">
+        <svg class="hotspot-line" style="position:absolute;left:0;top:0;overflow:visible;pointer-events:none;">
+          <line x1="0" y1="0" x2="${pos.lx}" y2="${pos.ly}" stroke="rgba(0,0,0,.2)" stroke-width="1"/>
+        </svg>
+        <div class="hotspot-label" style="left:${pos.lx}px;top:${pos.ly}px;">
           <div class="hotspot-name">${name}</div>
           <div class="hotspot-indicators">${indicators}</div>
         </div>
