@@ -64,12 +64,12 @@ const FALLBACK_DATA = {
 // Label direction chosen to avoid overlap
 // Dot = real geography. Label = offset position (px from dot) to avoid overlap.
 const HOTSPOTS = {
-  russia_ukraine:   { x: 57.8, y: 20.8, lx: -130, ly: -40, short: '俄乌' },
-  iran_israel_us:   { x: 62.7, y: 30.6, lx: 25,   ly: -45, short: '伊朗-美以' },
-  israel_palestine: { x: 58.5, y: 31.0, lx: -150, ly: 10,  short: '以巴/黎' },
-  china_taiwan:     { x: 80.2, y: 35.4, lx: 25,   ly: 5,   short: '台海' },
-  india_pakistan:    { x: 67.7, y: 31.9, lx: 25,   ly: 30,  short: '印巴' },
-  us_latam:         { x: 32.9, y: 44.6, lx: 20,   ly: -15, short: '美-拉美' },
+  russia_ukraine:   { x: 57.8, y: 20.8, lx: -130, ly: -35, short: '俄乌' },
+  iran_israel_us:   { x: 62.7, y: 30.6, lx: -145, ly: -30, short: '伊朗-美以' },
+  israel_palestine: { x: 58.5, y: 31.0, lx: -145, ly: 15,  short: '以巴/黎' },
+  china_taiwan:     { x: 80.2, y: 35.4, lx: -95,  ly: -35, short: '台海' },
+  india_pakistan:    { x: 67.7, y: 31.9, lx: 20,   ly: 25,  short: '印巴' },
+  us_latam:         { x: 32.9, y: 44.6, lx: 15,   ly: -40, short: '美-拉美' },
 };
 
 // --- Formatting helpers (matching war dashboard _pct / _prob_style) ---

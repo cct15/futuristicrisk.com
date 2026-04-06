@@ -173,18 +173,19 @@ section { padding: 96px 24px; }
   z-index: 2;
 }
 .hotspot-dot {
-  width: 5px; height: 5px;
+  width: 10px; height: 10px;
   border-radius: 50%;
   background: #dc2626;
   position: relative;
-  border: 1.5px solid #fff;
+  border: 2px solid #fff;
+  box-shadow: 0 0 4px rgba(220,38,38,.4);
 }
 .hotspot-dot::after {
   content: '';
   position: absolute;
-  inset: -5px;
+  inset: -6px;
   border-radius: 50%;
-  background: rgba(220,38,38,.12);
+  background: rgba(220,38,38,.15);
   animation: pulse 2.5s ease-out infinite;
 }
 .hotspot-label {
