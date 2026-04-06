@@ -1,138 +1,154 @@
-/* Risk Dashboard + Globe Hotspots */
+/* Risk Dashboard + Globe — aligned with War Dashboard style */
 
 const CONFLICT_NAMES = {
-  iran_israel_us: '伊朗-以色列/美国',
-  russia_ukraine: '俄罗斯-乌克兰',
-  china_taiwan: '中国-台湾',
-  israel_palestine: '以色列-巴勒斯坦',
-  india_pakistan: '印度-巴基斯坦',
-  us_latam: '美国-拉美',
+  iran_israel_us: '伊朗 - 美国/以色列',
+  russia_ukraine: '俄罗斯 - 乌克兰',
+  china_taiwan: '中国 - 台海',
+  israel_palestine: '以色列 - 巴勒斯坦',
+  india_pakistan: '印度 - 巴基斯坦',
+  us_latam: '美国 - 拉丁美洲',
 };
 
-const EVENT_LABELS = {
+const EVENT_ICONS = {
+  escalation: '⚔️',
+  ceasefire: '🕊',
+  ceasefire_cancel: '💥',
+  regime_change: '🏛',
+  diplomatic: '🤝',
+};
+
+const EVENT_CN = {
   escalation: '军事升级',
-  ceasefire: '停火',
-  ceasefire_cancel: '停火破裂',
+  ceasefire: '停战/和平',
+  ceasefire_cancel: '停战破裂',
   regime_change: '政权更迭',
-  diplomatic: '外交事件',
+  diplomatic: '外交斡旋',
 };
 
-// Fallback data for file:// protocol (CORS blocks fetch)
+const POSITIVE_TYPES = new Set(['ceasefire', 'diplomatic']);
+
+// Fallback data for file:// protocol
 const FALLBACK_DATA = {
   metadata: { updated_at: '2026-04-06T02:17:53+00:00' },
   conflicts: [
-    { conflict_id: 'iran_israel_us', label: 'Iran-Israel/US', risk_level: 'low', probability_30d: 0.0789, probability_7d: 0.019, probability_1d: 0.0027, composite_risk_score: 0.1737, anomaly_detected: false, risk_events: [
-      { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.0789, change_vs_7d_ago: -0.0107, data_points: 5 },
-      { event_type: 'ceasefire', direction: 'risk_decrease', probability_30d: 0.3092, change_vs_7d_ago: 0.0291, data_points: 11 },
+    { conflict_id: 'iran_israel_us', label: 'Iran-Israel/US', risk_level: 'low', probability_30d: 0.0789, probability_7d: 0.019, probability_1d: 0.0027, composite_risk_score: 0.1737, risk_events: [
+      { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.0789, probability_7d: 0.0229, probability_1d: 0.0033, change_vs_7d_ago: -0.0107 },
+      { event_type: 'regime_change', direction: 'risk_increase', probability_30d: 0.0444, probability_7d: 0.0102, probability_1d: 0.0015, change_vs_7d_ago: -0.0153 },
+      { event_type: 'diplomatic', direction: 'neutral', probability_30d: 0.0722, probability_7d: 0.0152, probability_1d: 0.0022, change_vs_7d_ago: -0.0364 },
+      { event_type: 'ceasefire', direction: 'risk_decrease', probability_30d: 0.3092, probability_7d: 0.0666, probability_1d: 0.0099, change_vs_7d_ago: 0.0291 },
     ]},
-    { conflict_id: 'india_pakistan', label: 'India-Pakistan', risk_level: 'low', probability_30d: 0.0382, probability_7d: 0.0091, probability_1d: 0.0013, composite_risk_score: 0.1245, anomaly_detected: false, risk_events: [
-      { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.0382, change_vs_7d_ago: 0.0002, data_points: 2 },
+    { conflict_id: 'india_pakistan', label: 'India-Pakistan', risk_level: 'low', probability_30d: 0.0382, probability_7d: 0.0091, probability_1d: 0.0013, composite_risk_score: 0.1245, risk_events: [
+      { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.0382, probability_7d: 0.0045, probability_1d: 0.0006, change_vs_7d_ago: 0.0002 },
     ]},
-    { conflict_id: 'russia_ukraine', label: 'Russia-Ukraine', risk_level: 'low', probability_30d: 0.0149, probability_7d: 0.0035, probability_1d: 0.0005, composite_risk_score: 0.1104, anomaly_detected: false, risk_events: [
-      { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.0149, change_vs_7d_ago: -0.0018, data_points: 6 },
-      { event_type: 'ceasefire', direction: 'risk_decrease', probability_30d: 0.034, change_vs_7d_ago: -0.0032, data_points: 6 },
+    { conflict_id: 'russia_ukraine', label: 'Russia-Ukraine', risk_level: 'low', probability_30d: 0.0149, probability_7d: 0.0035, probability_1d: 0.0005, composite_risk_score: 0.1104, risk_events: [
+      { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.0149, probability_7d: 0.0016, probability_1d: 0.0002, change_vs_7d_ago: -0.0018 },
+      { event_type: 'ceasefire', direction: 'risk_decrease', probability_30d: 0.034, probability_7d: 0.0055, probability_1d: 0.0008, change_vs_7d_ago: -0.0032 },
     ]},
-    { conflict_id: 'israel_palestine', label: 'Israel-Palestine', risk_level: 'low', probability_30d: 0.0, probability_7d: 0.0, probability_1d: 0.0, composite_risk_score: 0.103, anomaly_detected: false, risk_events: [
-      { event_type: 'ceasefire_cancel', direction: 'risk_increase', probability_30d: 0.0, change_vs_7d_ago: null, data_points: 4 },
-      { event_type: 'ceasefire', direction: 'risk_decrease', probability_30d: 0.0538, change_vs_7d_ago: -0.0164, data_points: 4 },
+    { conflict_id: 'israel_palestine', label: 'Israel-Palestine', risk_level: 'low', probability_30d: 0.0, probability_7d: 0.0, probability_1d: 0.0, composite_risk_score: 0.103, risk_events: [
+      { event_type: 'ceasefire_cancel', direction: 'risk_increase', probability_30d: 0.0, probability_7d: 0.0, probability_1d: 0.0, change_vs_7d_ago: null },
+      { event_type: 'ceasefire', direction: 'risk_decrease', probability_30d: 0.0538, probability_7d: 0.0032, probability_1d: 0.0005, change_vs_7d_ago: -0.0164 },
     ]},
-    { conflict_id: 'china_taiwan', label: 'China-Taiwan', risk_level: 'low', probability_30d: 0.0125, probability_7d: 0.0029, probability_1d: 0.0004, composite_risk_score: 0.0987, anomaly_detected: false, risk_events: [
-      { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.0125, change_vs_7d_ago: -0.0002, data_points: 9 },
+    { conflict_id: 'china_taiwan', label: 'China-Taiwan', risk_level: 'low', probability_30d: 0.0125, probability_7d: 0.0029, probability_1d: 0.0004, composite_risk_score: 0.0987, risk_events: [
+      { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.0125, probability_7d: 0.0035, probability_1d: 0.0005, change_vs_7d_ago: -0.0002 },
     ]},
-    { conflict_id: 'us_latam', label: 'US-Latin America', risk_level: 'low', probability_30d: 0.025, probability_7d: 0.0059, probability_1d: 0.0008, composite_risk_score: 0.0866, anomaly_detected: false, risk_events: [
-      { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.025, change_vs_7d_ago: -0.006, data_points: 5 },
+    { conflict_id: 'us_latam', label: 'US-Latin America', risk_level: 'low', probability_30d: 0.025, probability_7d: 0.0059, probability_1d: 0.0008, composite_risk_score: 0.0866, risk_events: [
+      { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.025, probability_7d: 0.0049, probability_1d: 0.0007, change_vs_7d_ago: -0.006 },
+      { event_type: 'regime_change', direction: 'risk_increase', probability_30d: 0.0352, probability_7d: 0.0083, probability_1d: 0.0012, change_vs_7d_ago: -0.0082 },
     ]},
   ]
 };
 
-// Globe hotspot positions (% of container, approximate lat/lon projection)
+// Globe hotspot positions
 const HOTSPOTS = {
-  russia_ukraine:   { x: 56, y: 24, label: '俄乌', dir: 'right' },
-  iran_israel_us:   { x: 55, y: 40, label: '伊朗', dir: 'left' },
-  israel_palestine: { x: 50, y: 47, label: '以巴', dir: 'left' },
-  china_taiwan:     { x: 80, y: 35, label: '台海', dir: 'right' },
-  india_pakistan:    { x: 70, y: 46, label: '印巴', dir: 'right' },
-  us_latam:         { x: 28, y: 58, label: '拉美', dir: 'left' },
+  russia_ukraine:   { x: 56, y: 24, dir: 'right' },
+  iran_israel_us:   { x: 55, y: 40, dir: 'left' },
+  israel_palestine: { x: 50, y: 47, dir: 'left' },
+  china_taiwan:     { x: 80, y: 35, dir: 'right' },
+  india_pakistan:    { x: 70, y: 46, dir: 'right' },
+  us_latam:         { x: 28, y: 58, dir: 'left' },
 };
 
-function formatProb(p) {
-  if (p === null || p === undefined) return '—';
-  return (p * 100).toFixed(1) + '%';
+// --- Formatting helpers (matching war dashboard _pct / _prob_style) ---
+
+function fmtPct(v) {
+  if (v === null || v === undefined) return '—';
+  if (v < 0.001) return '< 0.1%';
+  if (v >= 0.10) return Math.round(v * 100) + '%';
+  return (v * 100).toFixed(1) + '%';
 }
 
-function riskColor(level) {
-  if (level === 'high') return 'high';
-  if (level === 'medium') return 'medium';
-  return 'low';
-}
-
-function riskLabel(level) {
-  const labels = { high: '高', medium: '中', low: '低', unknown: '—' };
-  return labels[level] || level;
+function probStyle(p30, etype) {
+  const positive = POSITIVE_TYPES.has(etype);
+  if (positive) {
+    if (p30 >= 0.50) return { color: '#2563eb', label: '高概率' };
+    if (p30 >= 0.25) return { color: '#0891b2', label: '中概率' };
+    if (p30 >= 0.10) return { color: '#64748b', label: '低概率' };
+    return { color: '#94a3b8', label: '极低' };
+  } else {
+    if (p30 >= 0.50) return { color: '#dc2626', label: '高概率' };
+    if (p30 >= 0.25) return { color: '#ea580c', label: '中概率' };
+    if (p30 >= 0.10) return { color: '#d97706', label: '低概率' };
+    return { color: '#94a3b8', label: '极低' };
+  }
 }
 
 function deltaHTML(change) {
-  if (change === null || change === undefined) return '';
+  if (change === null || change === undefined) return '<span class="prob-delta prob-delta-na">—</span>';
   const pct = (change * 100).toFixed(1);
-  if (change > 0.001) return `<span class="risk-delta delta-up">+${pct}%</span>`;
-  if (change < -0.001) return `<span class="risk-delta delta-down">${pct}%</span>`;
-  return '';
+  if (change > 0.001) return `<span class="prob-delta prob-delta-up">+${pct}%▲</span>`;
+  if (change < -0.001) return `<span class="prob-delta prob-delta-down">${pct}%▼</span>`;
+  return '<span class="prob-delta prob-delta-flat">0</span>';
 }
+
+// --- Risk cards (per conflict, with per-event-type sub-cards) ---
 
 function renderCard(c) {
   const name = CONFLICT_NAMES[c.conflict_id] || c.label;
-  const badgeClass = riskColor(c.risk_level);
+  const events = (c.risk_events || []).filter(e => e.event_type !== 'other');
 
-  let delta7d = null;
-  if (c.risk_events) {
-    const esc = c.risk_events.find(e => e.event_type === 'escalation');
-    if (esc) delta7d = esc.change_vs_7d_ago;
+  // Sort: escalation first, then ceasefire_cancel, regime_change, diplomatic, ceasefire
+  const typeOrder = { escalation: 0, ceasefire_cancel: 1, regime_change: 2, diplomatic: 3, ceasefire: 4 };
+  events.sort((a, b) => (typeOrder[a.event_type] ?? 99) - (typeOrder[b.event_type] ?? 99));
+
+  let eventCards = '';
+  for (const e of events) {
+    const p30 = e.probability_30d || 0;
+    if (p30 < 0.005) continue; // skip very low
+
+    const { color, label: probLabel } = probStyle(p30, e.event_type);
+    const icon = EVENT_ICONS[e.event_type] || '';
+    const typeCN = EVENT_CN[e.event_type] || e.event_type;
+    const barPct = Math.min(p30 / 0.50 * 100, 100);
+    const p7 = e.probability_7d;
+    const p1 = e.probability_1d;
+    const d7 = deltaHTML(e.change_vs_7d_ago);
+
+    eventCards += `
+      <div class="prob-card">
+        <div class="prob-card-header">
+          <span class="prob-type">${icon} ${typeCN}</span>
+          <span class="prob-badge" style="background:${color}">${probLabel}</span>
+        </div>
+        <div class="prob-value" style="color:${color}">${fmtPct(p30)}</div>
+        <div class="prob-sub">未来30天概率</div>
+        <div class="prob-bar-bg"><div class="prob-bar-fill" style="width:${barPct.toFixed(1)}%;background:${color}"></div></div>
+        <div class="prob-details">
+          <span>7日 ${fmtPct(p7)} · 24h ${fmtPct(p1)}</span>
+          <span>周变化 ${d7}</span>
+        </div>
+      </div>`;
   }
 
-  const eventsHTML = (c.risk_events || [])
-    .filter(e => e.event_type !== 'other')
-    .map(e => {
-      const label = EVENT_LABELS[e.event_type] || e.event_type;
-      const dir = e.direction || 'neutral';
-      return `<span class="event-tag ${dir}">${label} ${formatProb(e.probability_30d)}</span>`;
-    })
-    .join('');
-
-  // Main event description
-  const mainEvent = (c.risk_events || []).find(e => e.event_type === 'escalation' || e.event_type === 'ceasefire_cancel');
-  const mainLabel = mainEvent ? (EVENT_LABELS[mainEvent.event_type] || '') : '';
-
-  // Bar = probability_30d directly as percentage (7.9% probability → 7.9% bar width)
-  const p30 = c.probability_30d || 0;
-  const barPct = Math.min(p30 * 100, 100);
-  const barColor = p30 >= 0.15 ? 'var(--risk-high)' : p30 >= 0.05 ? 'var(--risk-medium)' : 'var(--accent)';
+  if (!eventCards) return ''; // no visible events
 
   return `
-    <div class="risk-card risk-card--${badgeClass}">
-      <div class="risk-card-top">
-        <div class="risk-card-header">
-          <span class="risk-card-name">${name}</span>
-          <span class="risk-badge ${badgeClass}">${riskLabel(c.risk_level)}</span>
-        </div>
-        <div class="risk-card-desc">${mainLabel ? mainLabel + '概率（30天）' : '综合风险'}</div>
-      </div>
-      <div class="risk-card-main">
-        <span class="risk-main-value">${formatProb(c.probability_30d)}</span>
-        ${deltaHTML(delta7d)}
-      </div>
-      <div class="risk-card-bar">
-        <div class="risk-bar-track">
-          <div class="risk-bar-fill" style="width:${barPct}%;background:${barColor};"></div>
-        </div>
-        <div class="risk-bar-labels">
-          <span></span>
-          <span>7天 ${formatProb(c.probability_7d)} · 1天 ${formatProb(c.probability_1d)}</span>
-        </div>
-      </div>
-      <div class="risk-events">${eventsHTML}</div>
-    </div>
-  `;
+    <div class="conflict-section">
+      <h3 class="conflict-name">${name}</h3>
+      <div class="prob-cards">${eventCards}</div>
+    </div>`;
 }
+
+// --- Globe hotspots (dual indicator: ⚔ escalation + 🕊 ceasefire) ---
 
 function renderGlobe(conflicts) {
   const container = document.getElementById('globe-hotspots');
@@ -144,49 +160,63 @@ function renderGlobe(conflicts) {
   let html = '';
   for (const [id, pos] of Object.entries(HOTSPOTS)) {
     const c = probMap[id];
-    const prob = c ? formatProb(c.probability_30d) : '';
+    if (!c) continue;
+
+    const events = c.risk_events || [];
+    const esc = events.find(e => e.event_type === 'escalation' || e.event_type === 'ceasefire_cancel');
+    const cf = events.find(e => e.event_type === 'ceasefire');
+    const escP = esc ? fmtPct(esc.probability_30d) : null;
+    const cfP = cf ? fmtPct(cf.probability_30d) : null;
+
+    const name = CONFLICT_NAMES[id] || id;
+    // Short name for globe label
+    const shortName = name.split(' - ')[0].replace('以色列', '以巴');
+
+    let indicators = '';
+    if (escP) indicators += `<span class="globe-esc">⚔ ${escP}</span>`;
+    if (cfP) indicators += `<span class="globe-cf">🕊 ${cfP}</span>`;
+    if (!indicators) indicators = fmtPct(c.probability_30d);
+
     const dirClass = pos.dir === 'left' ? 'hotspot-label-left' : '';
+
     html += `
       <div class="hotspot" style="left:${pos.x}%;top:${pos.y}%;">
         <div class="hotspot-dot"></div>
-        <div class="hotspot-label ${dirClass}">${pos.label} <span class="hotspot-prob">${prob}</span></div>
-      </div>
-    `;
+        <div class="hotspot-label ${dirClass}">
+          <div class="hotspot-name">${shortName}</div>
+          <div class="hotspot-indicators">${indicators}</div>
+        </div>
+      </div>`;
   }
   container.innerHTML = html;
 }
 
+// --- Load data ---
+
 async function loadRiskDashboard() {
   let data;
   try {
-    // Try live data first (GitHub raw URL), then local fallback
     const liveUrl = 'https://raw.githubusercontent.com/cct15/war-dashboard-data/main/conflicts.json';
     let resp = await fetch(liveUrl);
     if (!resp.ok) resp = await fetch('data/sample-risks.json');
     data = await resp.json();
   } catch (e) {
-    // file:// protocol blocks fetch — use fallback
     data = FALLBACK_DATA;
   }
 
   const conflicts = data.conflicts || [];
 
-  // Render risk cards
   const dashEl = document.getElementById('risk-dashboard');
   if (dashEl) {
     dashEl.innerHTML = conflicts.map(renderCard).join('');
   }
 
-  // Render globe hotspots
   renderGlobe(conflicts);
 
-  // Update timestamp
   const tsEl = document.getElementById('risk-updated');
   if (tsEl && data.metadata && data.metadata.updated_at) {
     const d = new Date(data.metadata.updated_at);
-    tsEl.textContent = d.toLocaleDateString('zh-CN', {
-      year: 'numeric', month: 'long', day: 'numeric',
-    });
+    tsEl.textContent = d.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
   }
 }
 
