@@ -25,7 +25,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="css/style.css?v=20260406zz">
+  <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
 
@@ -33,6 +33,9 @@
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-brand"><span>FRI</span> Risk Intelligence</a>
+    <button class="nav-hamburger" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('nav-open')" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
     <ul class="nav-links">
       <li><a href="#trends">趋势</a></li>
       <li><a href="#dashboard">风险概率</a></li>
@@ -80,28 +83,6 @@
       <div class="globe-caption">冲突风险概率 · 未来 30 天</div>
       <div class="map-legend" id="map-legend"></div>
     </div>
-    </div>
-  </div>
-</section>
-
-<!-- S2: Trends -->
-<section id="trends" class="section-alt">
-  <div class="container">
-    <div class="section-title">结构性变化正在重塑风险格局</div>
-    <div class="section-subtitle">三个不可逆的趋势，使宏观风险情报从"可选"变为"必需"。</div>
-    <div class="trend-grid">
-      <div class="trend-card">
-        <h3>地缘格局多极化</h3>
-        <p>单极秩序向多极过渡，区域冲突频率上升。2024-2026 年间，同时活跃的武装冲突数量达二战以来峰值。传统"地缘风险只影响新兴市场"的假设已不再成立——供应链、能源、半导体的全球依赖使每一场区域冲突都具有系统性传导能力。</p>
-      </div>
-      <div class="trend-card">
-        <h3>信息碎片化与验证成本上升</h3>
-        <p>社交媒体时代，地缘信息噪声急剧增加、真假难辨。一条未经证实的传言可以在几分钟内引发市场波动。企业和投资者需要的是经过验证的、持续更新的结构化情报源——而非海量未经筛选的新闻流或昂贵的季度咨询报告。</p>
-      </div>
-      <div class="trend-card">
-        <h3>AI 正在改变决策速度</h3>
-        <p>自主 Agent 以毫秒级速度做出交易和运营决策，它们需要机器可读的结构化风险数据，而非季度 PDF 报告。风险情报的生产和分发方式必须从"人读报告"进化到"Agent 消费 API"——这是一个基础设施级的变化。</p>
-      </div>
     </div>
   </div>
 </section>
@@ -364,7 +345,29 @@
   </div>
 </section>
 
-<!-- S5: Methodology -->
+<!-- S5: Trends (why this matters) -->
+<section id="trends" class="section-alt">
+  <div class="container">
+    <div class="section-title">结构性变化正在重塑风险格局</div>
+    <div class="section-subtitle">三个不可逆的趋势，使宏观风险情报从"可选"变为"必需"。</div>
+    <div class="trend-grid">
+      <div class="trend-card">
+        <h3>地缘格局多极化</h3>
+        <p>单极秩序向多极过渡，区域冲突频率上升。2024-2026 年间，同时活跃的武装冲突数量达二战以来峰值。传统"地缘风险只影响新兴市场"的假设已不再成立——供应链、能源、半导体的全球依赖使每一场区域冲突都具有系统性传导能力。</p>
+      </div>
+      <div class="trend-card">
+        <h3>信息碎片化与验证成本上升</h3>
+        <p>社交媒体时代，地缘信息噪声急剧增加、真假难辨。一条未经证实的传言可以在几分钟内引发市场波动。企业和投资者需要的是经过验证的、持续更新的结构化情报源——而非海量未经筛选的新闻流或昂贵的季度咨询报告。</p>
+      </div>
+      <div class="trend-card">
+        <h3>AI 正在改变决策速度</h3>
+        <p>自主 Agent 以毫秒级速度做出交易和运营决策，它们需要机器可读的结构化风险数据，而非季度 PDF 报告。风险情报的生产和分发方式必须从"人读报告"进化到"Agent 消费 API"——这是一个基础设施级的变化。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S6: Methodology -->
 <section id="method" class="section-alt">
   <div class="container">
     <div class="section-title" style="text-align:center;">方法论</div>
@@ -469,6 +472,6 @@
   </div>
 </footer>
 
-<script src="js/risk-dashboard.js?v=2"></script>
+<script src="js/risk-dashboard.js?v=3"></script>
 </body>
 </html>

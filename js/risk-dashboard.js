@@ -299,7 +299,7 @@ function renderExtraRisks(events) {
       </section>`;
   }
 
-  container.innerHTML = html;
+  container.innerHTML = `<div class="extra-risks-divider">其他风险维度</div>` + html;
 }
 
 // --- Load data ---

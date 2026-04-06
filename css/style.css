@@ -302,7 +302,7 @@ section { padding: 96px 24px; }
 }
 .prob-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 12px;
   margin-bottom: 16px;
 }
@@ -434,6 +434,16 @@ section { padding: 96px 24px; }
   line-height: 1.5;
 }
 /* Extra risk sections */
+.extra-risks-divider {
+  margin: 40px 0 8px;
+  padding: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
 .extra-section { margin-top: 20px; }
 .extra-event-list { list-style: none; padding: 0; }
 .extra-event-item {
@@ -830,9 +840,46 @@ section { padding: 96px 24px; }
 .schema-table th { background: var(--bg-alt); font-weight: 600; font-size: 12px; color: var(--text); }
 .schema-table td { color: var(--text-muted); }
 
+/* ===== Hamburger menu ===== */
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  flex-direction: column;
+  gap: 5px;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform .2s, opacity .2s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
-  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    flex-direction: column;
+    padding: 16px 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    border-top: 1px solid var(--border);
+  }
+  .nav-links.nav-open { display: flex; }
+  .nav-links li { padding: 8px 0; }
+  .nav-cta { display: none; }
   section { padding: 64px 16px; }
   .hero-grid { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { margin-top: 24px; }
