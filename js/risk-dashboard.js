@@ -62,15 +62,21 @@ const FALLBACK_DATA = {
 // Dot positions (% of map) + label direction + short display name
 // Coordinates: real geography (from map_paths.py HOTSPOTS / 960x480)
 // Label direction chosen to avoid overlap
-// Dot = real geography. Label = offset position (px from dot) to avoid overlap.
+// Red dot positions (real geography from map_paths.py)
 const HOTSPOTS = {
-  russia_ukraine:   { x: 57.8, y: 20.8, lx: -130, ly: -30, short: '俄乌' },      // ← left-above
-  iran_israel_us:   { x: 62.7, y: 30.6, lx: 20,   ly: -40, short: '伊朗-美以' },  // → right-above
-  israel_palestine: { x: 58.5, y: 31.0, lx: -145, ly: 20,  short: '以巴/黎' },    // ← left-below
-  china_taiwan:     { x: 80.2, y: 35.4, lx: 20,   ly: -5,  short: '台海' },       // → right
-  india_pakistan:    { x: 67.7, y: 31.9, lx: 20,   ly: 30,  short: '印巴' },       // → right-below
-  us_latam:         { x: 32.9, y: 44.6, lx: -60,  ly: 20,  short: '美-拉美' },    // ← left-below
+  russia_ukraine:   { x: 57.8, y: 20.8 },
+  iran_israel_us:   { x: 62.7, y: 30.6 },
+  israel_palestine: { x: 58.5, y: 31.0 },
+  china_taiwan:     { x: 80.2, y: 35.4 },
+  india_pakistan:    { x: 67.7, y: 31.9 },
+  us_latam:         { x: 32.9, y: 44.6 },
 };
+
+// Display order for legend grid
+const LEGEND_ORDER = [
+  'iran_israel_us', 'russia_ukraine', 'israel_palestine',
+  'china_taiwan', 'india_pakistan', 'us_latam',
+];
 
 // --- Formatting helpers (matching war dashboard _pct / _prob_style) ---
 
@@ -104,43 +110,57 @@ function deltaHTML(change) {
   return '<span class="prob-delta prob-delta-flat">0</span>';
 }
 
-// --- Globe hotspots (dual indicator: ⚔ escalation + 🕊 ceasefire) ---
+// --- Map: red dots only (no text labels on map) ---
 
 function renderGlobe(conflicts) {
   const container = document.getElementById('globe-hotspots');
+  if (!container) return;
+
+  let html = '';
+  for (const [id, pos] of Object.entries(HOTSPOTS)) {
+    html += `<div class="hotspot" style="left:${pos.x}%;top:${pos.y}%;"><div class="hotspot-dot"></div></div>`;
+  }
+  container.innerHTML = html;
+}
+
+// --- Legend grid below map ---
+
+function renderMapLegend(conflicts) {
+  const container = document.getElementById('map-legend');
   if (!container) return;
 
   const probMap = {};
   conflicts.forEach(c => { probMap[c.conflict_id] = c; });
 
   let html = '';
-  for (const [id, pos] of Object.entries(HOTSPOTS)) {
+  for (const id of LEGEND_ORDER) {
     const c = probMap[id];
     if (!c) continue;
 
+    const name = CONFLICT_NAMES[id] || id;
     const events = c.risk_events || [];
     const esc = events.find(e => e.event_type === 'escalation' || e.event_type === 'ceasefire_cancel');
     const cf = events.find(e => e.event_type === 'ceasefire');
-    const escP = esc ? fmtPct(esc.probability_30d) : null;
-    const cfP = cf ? fmtPct(cf.probability_30d) : null;
-
-    // Short name for map label (full names are too wide and overlap)
-    const name = pos.short || CONFLICT_NAMES[id] || id;
 
     let indicators = '';
-    if (escP) indicators += `<span class="globe-esc">⚔ ${escP}</span>`;
-    if (cfP) indicators += `<span class="globe-cf">🕊 ${cfP}</span>`;
-    if (!indicators) indicators = fmtPct(c.probability_30d);
+    if (esc) {
+      const { color } = probStyle(esc.probability_30d, esc.event_type);
+      indicators += `<div class="legend-ind"><span style="color:${color}">⚔ ${fmtPct(esc.probability_30d)}</span></div>`;
+    }
+    if (cf) {
+      const { color } = probStyle(cf.probability_30d, cf.event_type);
+      indicators += `<div class="legend-ind"><span style="color:${color}">🕊 ${fmtPct(cf.probability_30d)}</span></div>`;
+    }
+    if (!indicators) {
+      indicators = `<div class="legend-ind">${fmtPct(c.probability_30d)}</div>`;
+    }
 
     html += `
-      <div class="hotspot" style="left:${pos.x}%;top:${pos.y}%;">
-        <div class="hotspot-dot"></div>
-        <svg class="hotspot-line" style="position:absolute;left:0;top:0;overflow:visible;pointer-events:none;">
-          <line x1="0" y1="0" x2="${pos.lx}" y2="${pos.ly}" stroke="rgba(0,0,0,.2)" stroke-width="1"/>
-        </svg>
-        <div class="hotspot-label" style="left:${pos.lx}px;top:${pos.ly}px;">
-          <div class="hotspot-name">${name}</div>
-          <div class="hotspot-indicators">${indicators}</div>
+      <div class="legend-card">
+        <div class="legend-dot"></div>
+        <div class="legend-info">
+          <div class="legend-name">${name}</div>
+          <div class="legend-indicators">${indicators}</div>
         </div>
       </div>`;
   }
@@ -162,9 +182,9 @@ async function loadRiskDashboard() {
 
   const conflicts = data.conflicts || [];
 
-  // Risk cards are now static HTML from the daily report — no JS rendering needed
-  // Only render globe hotspots dynamically
+  // Render map dots + legend grid
   renderGlobe(conflicts);
+  renderMapLegend(conflicts);
 
   const tsEl = document.getElementById('risk-updated');
   if (tsEl && data.metadata && data.metadata.updated_at) {

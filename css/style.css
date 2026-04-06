@@ -188,40 +188,55 @@ section { padding: 96px 24px; }
   background: rgba(220,38,38,.15);
   animation: pulse 2.5s ease-out infinite;
 }
-.hotspot-label {
-  position: absolute;
-  white-space: nowrap;
-  line-height: 1.3;
-  background: rgba(255,255,255,.94);
-  padding: 3px 7px;
-  border-radius: 4px;
-  border: 0.8px solid rgba(0,0,0,.12);
-  box-shadow: 0 1px 3px rgba(0,0,0,.1);
-  z-index: 3;
-  pointer-events: none;
-}
-/* Label positioned via inline style (px offset from dot) */
-.hotspot-name {
-  font-size: 9px;
-  font-weight: 600;
-  color: #1a1a2e;
-  line-height: 1.2;
-}
-.hotspot-indicators {
-  display: flex;
-  gap: 6px;
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-.globe-esc { color: #dc2626; }
-.globe-cf { color: #2563eb; }
 .globe-caption {
   text-align: center;
   font-size: 12px;
   color: var(--text-light);
   margin-top: 10px;
   letter-spacing: .3px;
+}
+
+/* Legend grid below map */
+.map-legend {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.legend-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #dc2626;
+  flex-shrink: 0;
+}
+.legend-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+.legend-indicators {
+  display: flex;
+  gap: 8px;
+}
+.legend-ind {
+  font-size: 12px;
+  font-weight: 700;
 }
 @keyframes pulse {
   0% { transform: scale(1); opacity: .6; }
