@@ -58,14 +58,14 @@ const FALLBACK_DATA = {
   ]
 };
 
-// Map hotspot positions (% of 960x480 viewBox, matching war dashboard map_paths.py HOTSPOTS)
+// Map hotspot positions (% of 960x480 viewBox) + label offsets (matching war dashboard)
 const HOTSPOTS = {
-  russia_ukraine:   { x: 57.8, y: 20.8, dir: 'right' },   // (555,100) / 960,480
-  iran_israel_us:   { x: 62.7, y: 30.6, dir: 'right' },   // (602,147)
-  israel_palestine: { x: 58.5, y: 31.0, dir: 'left' },    // (562,149)
-  china_taiwan:     { x: 80.2, y: 35.4, dir: 'right' },   // (770,170)
-  india_pakistan:    { x: 67.7, y: 31.9, dir: 'right' },   // (650,153)
-  us_latam:         { x: 32.9, y: 44.6, dir: 'left' },    // (316,214)
+  russia_ukraine:   { x: 57.8, y: 20.8, lx: 2,   ly: -7 },  // label: right-above
+  iran_israel_us:   { x: 62.7, y: 30.6, lx: 2,   ly: -8 },  // label: right-above
+  israel_palestine: { x: 58.5, y: 31.0, lx: -15,  ly: -5 },  // label: left
+  china_taiwan:     { x: 80.2, y: 35.4, lx: 2,   ly: -7 },  // label: right-above
+  india_pakistan:    { x: 67.7, y: 31.9, lx: 2,   ly: 4 },   // label: right-below
+  us_latam:         { x: 32.9, y: 44.6, lx: 2,   ly: -7 },  // label: right-above
 };
 
 // --- Formatting helpers (matching war dashboard _pct / _prob_style) ---
@@ -168,22 +168,22 @@ function renderGlobe(conflicts) {
     const escP = esc ? fmtPct(esc.probability_30d) : null;
     const cfP = cf ? fmtPct(cf.probability_30d) : null;
 
+    // Full name (matching war dashboard)
     const name = CONFLICT_NAMES[id] || id;
-    // Short name for globe label
-    const shortName = name.split(' - ')[0].replace('以色列', '以巴');
 
     let indicators = '';
     if (escP) indicators += `<span class="globe-esc">⚔ ${escP}</span>`;
     if (cfP) indicators += `<span class="globe-cf">🕊 ${cfP}</span>`;
     if (!indicators) indicators = fmtPct(c.probability_30d);
 
-    const dirClass = pos.dir === 'left' ? 'hotspot-label-left' : '';
+    // Label offset from dot (% units)
+    const labelStyle = `left:${pos.lx}%;top:${pos.ly}%;`;
 
     html += `
       <div class="hotspot" style="left:${pos.x}%;top:${pos.y}%;">
         <div class="hotspot-dot"></div>
-        <div class="hotspot-label ${dirClass}">
-          <div class="hotspot-name">${shortName}</div>
+        <div class="hotspot-label" style="${labelStyle}">
+          <div class="hotspot-name">${name}</div>
           <div class="hotspot-indicators">${indicators}</div>
         </div>
       </div>`;
@@ -208,7 +208,22 @@ async function loadRiskDashboard() {
 
   const dashEl = document.getElementById('risk-dashboard');
   if (dashEl) {
-    dashEl.innerHTML = conflicts.map(renderCard).join('');
+    // Split: conflicts with ≥3 visible events get full row, others go into compact grid
+    const full = [];
+    const compact = [];
+    for (const c of conflicts) {
+      const visibleEvents = (c.risk_events || []).filter(e => e.event_type !== 'other' && (e.probability_30d || 0) >= 0.005);
+      if (visibleEvents.length >= 3) {
+        full.push(c);
+      } else if (visibleEvents.length > 0) {
+        compact.push(c);
+      }
+    }
+    let html = full.map(renderCard).join('');
+    if (compact.length > 0) {
+      html += '<div class="compact-row">' + compact.map(renderCard).join('') + '</div>';
+    }
+    dashEl.innerHTML = html;
   }
 
   renderGlobe(conflicts);
