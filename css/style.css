@@ -103,8 +103,8 @@ section { padding: 96px 24px; }
 }
 .hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 40px;
   align-items: center;
   position: relative;
   z-index: 1;
@@ -157,11 +157,11 @@ section { padding: 96px 24px; }
 /* ===== World Map (flat, war dashboard style) ===== */
 .map-container {
   width: 100%;
-  max-width: 520px;
+  max-width: 680px;
   position: relative;
   margin: 0 auto;
   border-radius: 8px;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border);
 }
@@ -201,16 +201,16 @@ section { padding: 96px 24px; }
 }
 /* Label placement — large offsets to clear the dot and other labels */
 .hotspot-right {
-  left: 14px;
-  top: -14px;
+  left: 16px;
+  top: -16px;
 }
 .hotspot-left {
-  right: 14px;
-  top: -4px;
+  right: 16px;
+  top: -2px;
 }
 .hotspot-below {
-  left: 14px;
-  top: 16px;
+  left: 16px;
+  top: 18px;
 }
 .hotspot-name {
   font-size: 9px;
