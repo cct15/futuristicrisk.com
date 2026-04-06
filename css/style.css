@@ -196,6 +196,24 @@ section { padding: 96px 24px; }
   border-radius: 4px;
   border: 0.8px solid rgba(0,0,0,.12);
   box-shadow: 0 1px 3px rgba(0,0,0,.1);
+  z-index: 3;
+  pointer-events: none;
+}
+/* Label placement directions */
+.hotspot-right {
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.hotspot-left {
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.hotspot-below {
+  left: 50%;
+  top: 12px;
+  transform: translateX(-50%);
 }
 .hotspot-name {
   font-size: 9px;

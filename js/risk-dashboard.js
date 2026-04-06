@@ -59,14 +59,15 @@ const FALLBACK_DATA = {
 };
 
 // Map hotspot positions (% of 960x480 viewBox) + label offsets (matching war dashboard)
-// Dot positions shifted to avoid visual clustering + label offsets in %
+// Dot positions (% of map) + label placement direction
+// dir: 'right' = label to right of dot, 'left' = label to left, 'below' = below dot
 const HOTSPOTS = {
-  russia_ukraine:   { x: 57.8, y: 18,   lx: 2,   ly: -8 },
-  iran_israel_us:   { x: 61,   y: 27,   lx: 3,   ly: -9 },   // moved up from 30.6
-  israel_palestine: { x: 55,   y: 34,   lx: -18, ly: -2 },   // moved down from 31, label far left
-  china_taiwan:     { x: 80,   y: 33,   lx: 2,   ly: -8 },
-  india_pakistan:    { x: 69,   y: 40,   lx: 2,   ly: -8 },   // moved down from 31.9
-  us_latam:         { x: 33,   y: 46,   lx: 2,   ly: -8 },
+  russia_ukraine:   { x: 57.8, y: 18,  dir: 'right' },
+  iran_israel_us:   { x: 61,   y: 27,  dir: 'right' },
+  israel_palestine: { x: 54,   y: 35,  dir: 'left' },
+  china_taiwan:     { x: 80,   y: 33,  dir: 'right' },
+  india_pakistan:    { x: 69,   y: 42,  dir: 'below' },
+  us_latam:         { x: 33,   y: 46,  dir: 'right' },
 };
 
 // --- Formatting helpers (matching war dashboard _pct / _prob_style) ---
@@ -129,13 +130,10 @@ function renderGlobe(conflicts) {
     if (cfP) indicators += `<span class="globe-cf">🕊 ${cfP}</span>`;
     if (!indicators) indicators = fmtPct(c.probability_30d);
 
-    // Label offset from dot (% units)
-    const labelStyle = `left:${pos.lx}%;top:${pos.ly}%;`;
-
     html += `
       <div class="hotspot" style="left:${pos.x}%;top:${pos.y}%;">
         <div class="hotspot-dot"></div>
-        <div class="hotspot-label" style="${labelStyle}">
+        <div class="hotspot-label hotspot-${pos.dir}">
           <div class="hotspot-name">${name}</div>
           <div class="hotspot-indicators">${indicators}</div>
         </div>
