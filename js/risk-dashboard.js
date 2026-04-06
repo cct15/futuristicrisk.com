@@ -100,54 +100,6 @@ function deltaHTML(change) {
   return '<span class="prob-delta prob-delta-flat">0</span>';
 }
 
-// --- Risk cards (per conflict, with per-event-type sub-cards) ---
-
-function renderCard(c) {
-  const name = CONFLICT_NAMES[c.conflict_id] || c.label;
-  const events = (c.risk_events || []).filter(e => e.event_type !== 'other');
-
-  // Sort: escalation first, then ceasefire_cancel, regime_change, diplomatic, ceasefire
-  const typeOrder = { escalation: 0, ceasefire_cancel: 1, regime_change: 2, diplomatic: 3, ceasefire: 4 };
-  events.sort((a, b) => (typeOrder[a.event_type] ?? 99) - (typeOrder[b.event_type] ?? 99));
-
-  let eventCards = '';
-  for (const e of events) {
-    const p30 = e.probability_30d || 0;
-    if (p30 < 0.005) continue; // skip very low
-
-    const { color, label: probLabel } = probStyle(p30, e.event_type);
-    const icon = EVENT_ICONS[e.event_type] || '';
-    const typeCN = EVENT_CN[e.event_type] || e.event_type;
-    const barPct = Math.min(p30 / 0.50 * 100, 100);
-    const p7 = e.probability_7d;
-    const p1 = e.probability_1d;
-    const d7 = deltaHTML(e.change_vs_7d_ago);
-
-    eventCards += `
-      <div class="prob-card">
-        <div class="prob-card-header">
-          <span class="prob-type">${icon} ${typeCN}</span>
-          <span class="prob-badge" style="background:${color}">${probLabel}</span>
-        </div>
-        <div class="prob-value" style="color:${color}">${fmtPct(p30)}</div>
-        <div class="prob-sub">未来30天概率</div>
-        <div class="prob-bar-bg"><div class="prob-bar-fill" style="width:${barPct.toFixed(1)}%;background:${color}"></div></div>
-        <div class="prob-details">
-          <span>7日 ${fmtPct(p7)} · 24h ${fmtPct(p1)}</span>
-          <span>周变化 ${d7}</span>
-        </div>
-      </div>`;
-  }
-
-  if (!eventCards) return ''; // no visible events
-
-  return `
-    <div class="conflict-section">
-      <h3 class="conflict-name">${name}</h3>
-      <div class="prob-cards">${eventCards}</div>
-    </div>`;
-}
-
 // --- Globe hotspots (dual indicator: ⚔ escalation + 🕊 ceasefire) ---
 
 function renderGlobe(conflicts) {
@@ -206,26 +158,8 @@ async function loadRiskDashboard() {
 
   const conflicts = data.conflicts || [];
 
-  const dashEl = document.getElementById('risk-dashboard');
-  if (dashEl) {
-    // Split: conflicts with ≥3 visible events get full row, others go into compact grid
-    const full = [];
-    const compact = [];
-    for (const c of conflicts) {
-      const visibleEvents = (c.risk_events || []).filter(e => e.event_type !== 'other' && (e.probability_30d || 0) >= 0.005);
-      if (visibleEvents.length >= 3) {
-        full.push(c);
-      } else if (visibleEvents.length > 0) {
-        compact.push(c);
-      }
-    }
-    let html = full.map(renderCard).join('');
-    if (compact.length > 0) {
-      html += '<div class="compact-row">' + compact.map(renderCard).join('') + '</div>';
-    }
-    dashEl.innerHTML = html;
-  }
-
+  // Risk cards are now static HTML from the daily report — no JS rendering needed
+  // Only render globe hotspots dynamically
   renderGlobe(conflicts);
 
   const tsEl = document.getElementById('risk-updated');
