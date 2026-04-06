@@ -102,9 +102,9 @@ function renderCard(c) {
   const mainEvent = (c.risk_events || []).find(e => e.event_type === 'escalation' || e.event_type === 'ceasefire_cancel');
   const mainLabel = mainEvent ? (EVENT_LABELS[mainEvent.event_type] || '') : '';
 
-  // Bar driven by probability_30d (max ~30% for visual scale)
+  // Bar = probability_30d directly as percentage (7.9% probability → 7.9% bar width)
   const p30 = c.probability_30d || 0;
-  const barPct = Math.min(p30 * 100 / 0.3, 100);
+  const barPct = Math.min(p30 * 100, 100);
   const barColor = p30 >= 0.15 ? 'var(--risk-high)' : p30 >= 0.05 ? 'var(--risk-medium)' : 'var(--accent)';
 
   return `
