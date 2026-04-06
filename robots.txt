@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://futuristicrisk.com/sitemap.xml
+Sitemap: https://futuristicrisks.com/sitemap.xml
