@@ -90,6 +90,10 @@ for conflict in data["conflicts"]:
       <tr><td><code>probability_7d</code></td><td>7 天内事件发生概率</td></tr>
       <tr><td><code>probability_1d</code></td><td>1 天内事件发生概率</td></tr>
       <tr><td><code>composite_risk_score</code></td><td>综合风险评分</td></tr>
+      <tr><td><code>situation_briefing</code></td><td>当日情况概要（中文，基于最新新闻编辑）</td></tr>
+      <tr><td><code>risk_impact</code></td><td>风险传导分析：<code>industries[]</code>（影响行业）、<code>assets[]</code>（关注资产）、<code>channels[]</code>（传导路径）</td></tr>
+      <tr><td><code>data_points</code></td><td>数据源数量（用于评估置信度）</td></tr>
+      <tr><td><code>anomaly_detected</code></td><td>是否检测到概率异常波动</td></tr>
       <tr><td><code>risk_events[]</code></td><td>细分事件列表（升级/停火/政权更迭/外交）</td></tr>
       <tr><td><code>risk_events[].change_vs_7d_ago</code></td><td>较 7 天前的概率变化</td></tr>
     </table>
@@ -103,8 +107,9 @@ for conflict in data["conflicts"]:
     <p>返回字段：</p>
     <table class="schema-table">
       <tr><th>字段</th><th>说明</th></tr>
-      <tr><td><code>event_summary</code></td><td>事件描述</td></tr>
-      <tr><td><code>category</code></td><td>类别</td></tr>
+      <tr><td><code>event_summary</code></td><td>事件描述（中文）</td></tr>
+      <tr><td><code>event_summary_en</code></td><td>事件描述（英文原文）</td></tr>
+      <tr><td><code>category</code></td><td>类别：<code>political</code> / <code>economic</code> / <code>natural_disaster</code></td></tr>
       <tr><td><code>probability</code></td><td>事件发生概率</td></tr>
       <tr><td><code>importance</code></td><td>编辑推荐等级：<code>high</code>（建议展示）/ <code>low</code>（数据完整性保留）</td></tr>
       <tr><td><code>deadline</code></td><td>截止日期</td></tr>

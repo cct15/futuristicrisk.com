@@ -31,27 +31,27 @@ const POSITIVE_TYPES = new Set(['ceasefire', 'diplomatic']);
 const FALLBACK_DATA = {
   metadata: { updated_at: '2026-04-06T02:17:53+00:00' },
   conflicts: [
-    { conflict_id: 'iran_israel_us', label: 'Iran-Israel/US', risk_level: 'low', probability_30d: 0.0789, probability_7d: 0.019, probability_1d: 0.0027, composite_risk_score: 0.1737, risk_events: [
+    { conflict_id: 'iran_israel_us', label: 'Iran-Israel/US', importance: 'high', risk_level: 'low', probability_30d: 0.0789, probability_7d: 0.019, probability_1d: 0.0027, composite_risk_score: 0.1737, risk_events: [
       { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.0789, probability_7d: 0.0229, probability_1d: 0.0033, change_vs_7d_ago: -0.0107 },
       { event_type: 'regime_change', direction: 'risk_increase', probability_30d: 0.0444, probability_7d: 0.0102, probability_1d: 0.0015, change_vs_7d_ago: -0.0153 },
       { event_type: 'diplomatic', direction: 'neutral', probability_30d: 0.0722, probability_7d: 0.0152, probability_1d: 0.0022, change_vs_7d_ago: -0.0364 },
       { event_type: 'ceasefire', direction: 'risk_decrease', probability_30d: 0.3092, probability_7d: 0.0666, probability_1d: 0.0099, change_vs_7d_ago: 0.0291 },
     ]},
-    { conflict_id: 'india_pakistan', label: 'India-Pakistan', risk_level: 'low', probability_30d: 0.0382, probability_7d: 0.0091, probability_1d: 0.0013, composite_risk_score: 0.1245, risk_events: [
+    { conflict_id: 'india_pakistan', label: 'India-Pakistan', importance: 'high', risk_level: 'low', probability_30d: 0.0382, probability_7d: 0.0091, probability_1d: 0.0013, composite_risk_score: 0.1245, risk_events: [
       { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.0382, probability_7d: 0.0045, probability_1d: 0.0006, change_vs_7d_ago: 0.0002 },
     ]},
-    { conflict_id: 'russia_ukraine', label: 'Russia-Ukraine', risk_level: 'low', probability_30d: 0.0149, probability_7d: 0.0035, probability_1d: 0.0005, composite_risk_score: 0.1104, risk_events: [
+    { conflict_id: 'russia_ukraine', label: 'Russia-Ukraine', importance: 'high', risk_level: 'low', probability_30d: 0.0149, probability_7d: 0.0035, probability_1d: 0.0005, composite_risk_score: 0.1104, risk_events: [
       { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.0149, probability_7d: 0.0016, probability_1d: 0.0002, change_vs_7d_ago: -0.0018 },
       { event_type: 'ceasefire', direction: 'risk_decrease', probability_30d: 0.034, probability_7d: 0.0055, probability_1d: 0.0008, change_vs_7d_ago: -0.0032 },
     ]},
-    { conflict_id: 'israel_palestine', label: 'Israel-Palestine', risk_level: 'low', probability_30d: 0.0, probability_7d: 0.0, probability_1d: 0.0, composite_risk_score: 0.103, risk_events: [
+    { conflict_id: 'israel_palestine', label: 'Israel-Palestine', importance: 'high', risk_level: 'low', probability_30d: 0.0, probability_7d: 0.0, probability_1d: 0.0, composite_risk_score: 0.103, risk_events: [
       { event_type: 'ceasefire_cancel', direction: 'risk_increase', probability_30d: 0.0, probability_7d: 0.0, probability_1d: 0.0, change_vs_7d_ago: null },
       { event_type: 'ceasefire', direction: 'risk_decrease', probability_30d: 0.0538, probability_7d: 0.0032, probability_1d: 0.0005, change_vs_7d_ago: -0.0164 },
     ]},
-    { conflict_id: 'china_taiwan', label: 'China-Taiwan', risk_level: 'low', probability_30d: 0.0125, probability_7d: 0.0029, probability_1d: 0.0004, composite_risk_score: 0.0987, risk_events: [
+    { conflict_id: 'china_taiwan', label: 'China-Taiwan', importance: 'low', risk_level: 'low', probability_30d: 0.0125, probability_7d: 0.0029, probability_1d: 0.0004, composite_risk_score: 0.0987, risk_events: [
       { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.0125, probability_7d: 0.0035, probability_1d: 0.0005, change_vs_7d_ago: -0.0002 },
     ]},
-    { conflict_id: 'us_latam', label: 'US-Latin America', risk_level: 'low', probability_30d: 0.025, probability_7d: 0.0059, probability_1d: 0.0008, composite_risk_score: 0.0866, risk_events: [
+    { conflict_id: 'us_latam', label: 'US-Latin America', importance: 'low', risk_level: 'low', probability_30d: 0.025, probability_7d: 0.0059, probability_1d: 0.0008, composite_risk_score: 0.0866, risk_events: [
       { event_type: 'escalation', direction: 'risk_increase', probability_30d: 0.025, probability_7d: 0.0049, probability_1d: 0.0007, change_vs_7d_ago: -0.006 },
       { event_type: 'regime_change', direction: 'risk_increase', probability_30d: 0.0352, probability_7d: 0.0083, probability_1d: 0.0012, change_vs_7d_ago: -0.0082 },
     ]},
