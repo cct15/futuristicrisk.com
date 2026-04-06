@@ -259,8 +259,8 @@ function renderExtraRisks(events) {
   const container = document.getElementById('extra-risks');
   if (!container || !events || events.length === 0) return;
 
-  // Only show high-importance events (matching daily report editorial filter)
-  const curated = events.filter(e => e.importance === 'high');
+  // Only show curated events (supports both field names during CDN transition)
+  const curated = events.filter(e => e.importance === 'high' || e.curated === true);
 
   // Group by category
   const groups = {};
