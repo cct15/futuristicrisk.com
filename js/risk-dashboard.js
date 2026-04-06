@@ -63,12 +63,12 @@ const FALLBACK_DATA = {
 // Coordinates: real geography (from map_paths.py HOTSPOTS / 960x480)
 // Label direction chosen to avoid overlap
 const HOTSPOTS = {
-  russia_ukraine:   { x: 57.8, y: 20.8, dir: 'right', short: '俄乌' },       // (555,100)
-  iran_israel_us:   { x: 62.7, y: 30.6, dir: 'right', short: '伊朗-美以' },   // (602,147)
-  israel_palestine: { x: 58.5, y: 31.0, dir: 'left',  short: '以巴/黎' },     // (562,149)
-  china_taiwan:     { x: 80.2, y: 35.4, dir: 'right', short: '台海' },        // (770,170)
-  india_pakistan:    { x: 67.7, y: 31.9, dir: 'below', short: '印巴' },        // (650,153)
-  us_latam:         { x: 32.9, y: 44.6, dir: 'right', short: '美-拉美' },     // (316,214)
+  russia_ukraine:   { x: 57.8, y: 20.8, dir: 'left',  short: '俄乌' },       // label left to avoid伊朗
+  iran_israel_us:   { x: 62.7, y: 30.6, dir: 'right', short: '伊朗-美以' },   // label right
+  israel_palestine: { x: 58.5, y: 31.0, dir: 'left',  short: '以巴/黎' },     // label left
+  china_taiwan:     { x: 80.2, y: 35.4, dir: 'left',  short: '台海' },        // label LEFT to avoid edge
+  india_pakistan:    { x: 67.7, y: 31.9, dir: 'below', short: '印巴' },        // label below
+  us_latam:         { x: 32.9, y: 44.6, dir: 'right', short: '美-拉美' },
 };
 
 // --- Formatting helpers (matching war dashboard _pct / _prob_style) ---
