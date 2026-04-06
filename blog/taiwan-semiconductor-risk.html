@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台海冲突对全球半导体供应链的风险评估 — Futuristic Risk Intelligence</title>
+  <meta name="description" content="量化分析台海冲突升级对全球半导体供应链的级联影响。台积电集中度风险、航运中断传导路径、佩洛西访台前例分析及企业应对策略。">
+  <meta name="keywords" content="台海冲突, 台积电风险, 半导体供应链, 台湾海峡, TSMC风险, 芯片供应链中断">
+
+  <meta property="og:title" content="台海冲突对全球半导体供应链的风险评估">
+  <meta property="og:description" content="量化分析台海冲突如何通过航运中断和生产停摆两条路径冲击全球半导体供应链">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "台海冲突对全球半导体供应链的风险评估",
+    "description": "量化分析台海冲突升级对全球半导体供应链的级联影响，包括台积电集中度风险和航运中断传导路径。",
+    "author": {
+      "@type": "Organization",
+      "name": "Futuristic Risk Intelligence"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Futuristic Risk Intelligence",
+      "url": "https://futuristicrisks.com"
+    },
+    "datePublished": "2026-04-06",
+    "dateModified": "2026-04-06",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://futuristicrisks.com/blog/taiwan-semiconductor-risk.html"
+    },
+    "keywords": ["台海冲突", "台积电风险", "半导体供应链", "台湾海峡"]
+  }
+  </script>
+
+  <style>
+    .article { max-width: 720px; margin: 0 auto; padding-top: 100px; }
+    .article h1 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
+    .article-meta { color: var(--text-light); font-size: 13px; margin-bottom: 32px; }
+    .article h2 { font-size: 22px; margin-top: 40px; margin-bottom: 16px; }
+    .article h3 { font-size: 18px; margin-top: 28px; margin-bottom: 12px; color: var(--accent); }
+    .article p { color: var(--text-muted); margin-bottom: 16px; font-size: 16px; line-height: 1.8; }
+    .article ul, .article ol { color: var(--text-muted); margin-bottom: 16px; padding-left: 24px; }
+    .article li { margin-bottom: 8px; line-height: 1.7; }
+    .article strong { color: var(--text); }
+    .article-cta { text-align: center; margin: 48px 0; padding: 32px; background: var(--bg-alt); border-radius: 12px; }
+    .article-cta p { color: var(--text-muted); margin-bottom: 16px; }
+    .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+    .data-table th, .data-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+    .data-table th { color: var(--text); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .data-table td { color: var(--text-muted); }
+    .callout { padding: 16px 20px; background: var(--bg-alt); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; margin: 20px 0; }
+    .callout p { margin-bottom: 0; font-size: 14px; }
+    .cascade-flow { padding: 20px; background: var(--bg-alt); border-radius: 12px; margin: 24px 0; }
+    .cascade-step { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+    .cascade-step:last-child { margin-bottom: 0; }
+    .cascade-num { flex-shrink: 0; width: 32px; height: 32px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+    .cascade-content { flex: 1; }
+    .cascade-content .label { color: var(--text); font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+    .cascade-content .detail { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+    .cascade-content .prob { color: var(--accent); font-weight: 600; }
+    .cascade-arrow { text-align: center; color: var(--text-light); font-size: 18px; margin: 8px 0; padding-left: 8px; }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-brand"><span>FRI</span> Risk Intelligence</a>
+    <ul class="nav-links">
+      <li><a href="../index.html#trends">趋势</a></li>
+      <li><a href="../index.html#dashboard">风险概率</a></li>
+      <li><a href="../index.html#news">情报</a></li>
+      <li><a href="../index.html#cascade">传导分析</a></li>
+      <li><a href="../index.html#method">方法论</a></li>
+      <li><a href="../api-docs.html">API</a></li>
+    </ul>
+    <a href="../demo.html" class="nav-cta">申请 Demo</a>
+  </div>
+</nav>
+
+<section>
+  <div class="container article">
+    <h1>台海冲突对全球半导体供应链的风险评估</h1>
+    <div class="article-meta">2026年4月6日 · Futuristic Risk Intelligence · 阅读约 10 分钟</div>
+
+    <p>台湾海峡是全球地缘政治中一个独特的风险节点：升级概率低，但潜在影响极端。这种"低概率、高影响"的特征使得传统的定性分析几乎无法为决策者提供有效指引。本文基于我们的级联传导模型和概率数据，对台海冲突的半导体供应链影响进行量化评估。</p>
+
+    <h2>一、当前概率评估</h2>
+
+    <p>截至2026年4月6日，中国-台湾冲突的概率数据如下：</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>指标</th>
+          <th>数值</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>30天军事升级概率</td>
+          <td>1.25%</td>
+        </tr>
+        <tr>
+          <td>7天军事升级概率</td>
+          <td>0.35%</td>
+        </tr>
+        <tr>
+          <td>综合风险评分</td>
+          <td>0.099</td>
+        </tr>
+        <tr>
+          <td>7天变化</td>
+          <td>-0.02%（基本持平）</td>
+        </tr>
+        <tr>
+          <td>数据源数量</td>
+          <td>9</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>1.25%的30天升级概率是六大冲突区域中最低的之一。但将时间窗口拉长至一年，不发生任何升级的概率约为86%，反过来说，年化升级概率约为14%。如果进一步考虑未来5年的时间跨度，至少发生一次显著升级的概率超过50%。</p>
+
+    <p>更重要的是，台海冲突的综合权重为0.5，在六大冲突中排名第三（仅次于俄乌的1.0和伊朗的0.8）。这一权重反映的不是升级概率，而是升级后对全球金融和实体经济的冲击量级。</p>
+
+    <h2>二、级联传导模型：从军事升级到芯片断供</h2>
+
+    <p>我们的级联分析识别出台海冲突的两级传导链：</p>
+
+    <div class="cascade-flow">
+      <div class="cascade-step">
+        <div class="cascade-num">0</div>
+        <div class="cascade-content">
+          <div class="label">触发事件：台海冲突升级</div>
+          <div class="detail">包括军事演习封锁、导弹试射、海上对峙等场景。当前30天概率：<span class="prob">1.25%</span></div>
+        </div>
+      </div>
+      <div class="cascade-arrow">|</div>
+      <div class="cascade-step">
+        <div class="cascade-num">1</div>
+        <div class="cascade-content">
+          <div class="label">第一级：台湾海峡航行受阻</div>
+          <div class="detail">条件概率：<span class="prob">70%</span>（给定军事升级发生）。全球50%集装箱航线经台湾海峡，受阻后绕行增加约7天。影响行业：航运、贸易。</div>
+        </div>
+      </div>
+      <div class="cascade-arrow">|</div>
+      <div class="cascade-step">
+        <div class="cascade-num">2</div>
+        <div class="cascade-content">
+          <div class="label">第二级：半导体供应链受威胁</div>
+          <div class="detail">条件概率：<span class="prob">55%</span>（给定海峡受阻）。台积电生产受扰或停摆，先进制程交付延迟3-18个月。影响行业：半导体、消费电子、汽车。</div>
+        </div>
+      </div>
+    </div>
+
+    <p>需要特别说明第二级传导概率为55%而非更高的原因。我们在模型设计中明确区分了"军事示威/封锁演习"与"实际入侵"两种场景。2022年佩洛西访台事件表明，即使军事演习导致航运中断，台积电仍可正常运行。只有在实际军事入侵或长期海上封锁导致原材料断供的场景下，半导体生产才会实质性停摆。55%这一数值反映了从"航运受阻"到"生产停摆"并非必然的传导关系。</p>
+
+    <p>将条件概率链相乘，从军事升级到半导体供应受威胁的联合概率为 70% x 55% = <strong>38.5%</strong>。</p>
+
+    <h2>三、台积电集中度：全球供应链的最大单点故障</h2>
+
+    <p>要理解台海冲突为何拥有如此高的影响权重，必须理解台积电在全球半导体产业中的独特地位。</p>
+
+    <h3>产能集中度数据</h3>
+    <ul>
+      <li><strong>先进制程（7nm以下）</strong>：台积电全球市占率超过90%。苹果、英伟达、AMD、高通等巨头的最先进芯片几乎完全依赖台积电代工。</li>
+      <li><strong>整体晶圆代工</strong>：台积电全球市占率约55-60%，加上联华电子等其他台湾代工厂，台湾合计占全球代工产能约65%。</li>
+      <li><strong>地理集中</strong>：台积电的核心产能集中在台湾新竹、台中和台南三地。虽然正在亚利桑那、日本和德国建设新产能，但这些海外工厂在2026年仍处于早期阶段，无法替代台湾本土产能。</li>
+    </ul>
+
+    <p>这种极端的供应集中度在其他任何产业中几乎看不到。即使是OPEC对全球石油供应的控制力，也远不如台积电对先进制程芯片的垄断程度。</p>
+
+    <h3>为什么集中度不会快速改变</h3>
+
+    <p>建设一座先进制程晶圆厂需要3-5年时间和150-200亿美元投资。即使各国政府正在通过CHIPS法案（美国）、半导体战略（欧盟、日本）等政策推动产能分散，到2030年前台湾仍将是先进制程芯片的绝对供应中心。这意味着台海风险在未来至少4-5年内都将是全球供应链的结构性软肋。</p>
+
+    <h2>四、2022年佩洛西访台：唯一的近代参考事件</h2>
+
+    <p>2022年8月时任美国众议院议长佩洛西访问台湾，引发了中国大陆历史上最大规模的环台军事演习。这一事件是评估台海冲突市场影响的唯一近代参考。</p>
+
+    <h3>事件时间线与市场反应</h3>
+    <ul>
+      <li><strong>8月2日</strong>：佩洛西抵达台北。台积电（TSM）股价下跌约5%，费城半导体指数（SOXX）下跌约3%。</li>
+      <li><strong>8月4-7日</strong>：解放军在台湾周围六个海域进行实弹演习，发射弹道导弹飞越台湾上空。部分国际航班和航运改道。</li>
+      <li><strong>8月中旬</strong>：演习结束，航运恢复正常。台积电股价在约两周内恢复至访台前水平。</li>
+    </ul>
+
+    <h3>关键启示</h3>
+    <p>佩洛西事件提供了三条重要启示：</p>
+
+    <ol>
+      <li><strong>军演不等于停产</strong>：整个演习期间台积电生产未受影响，工厂正常运转。市场下跌完全由恐慌情绪驱动，非实际供应中断。这是我们将第二级传导概率设为55%（而非85%或更高）的核心依据。</li>
+      <li><strong>航运中断是实际发生的</strong>：演习期间部分航线被迫改道，航运成本短暂上升。这验证了第一级传导（航运受阻）70%条件概率的合理性。</li>
+      <li><strong>恢复速度快但有条件</strong>：两周恢复的前提是演习结束后各方选择降级。如果军事对峙持续数月（而非数天），市场影响将呈非线性放大。</li>
+    </ol>
+
+    <h2>五、场景分析：从温和到极端</h2>
+
+    <p>基于佩洛西事件的经验和级联模型，我们构建了三个场景：</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>场景</th>
+          <th>描述</th>
+          <th>半导体影响</th>
+          <th>恢复时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>温和</strong></td>
+          <td>政治危机 + 短期军演（类佩洛西）</td>
+          <td>TSM -5%, SOXX -3%, 生产不受影响</td>
+          <td>1-2周</td>
+        </tr>
+        <tr>
+          <td><strong>中等</strong></td>
+          <td>持续性海上封锁/航运管制</td>
+          <td>原材料进口受阻，产能利用率下降，交付延迟3-6个月</td>
+          <td>3-6个月</td>
+        </tr>
+        <tr>
+          <td><strong>极端</strong></td>
+          <td>军事冲突导致工厂停产</td>
+          <td>全球先进制程芯片断供，交付延迟12-18个月</td>
+          <td>1-3年</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>极端场景的经济影响是灾难性的。全球几乎所有需要先进制程芯片的产品，包括智能手机、数据中心GPU、汽车ADAS系统、5G基站，都将面临严重的供应短缺。2020-2021年全球芯片荒期间，仅是产能利用率下降15-20%就导致了全球汽车产量减少1100万辆。台积电完全停产的影响将远超那一次。</p>
+
+    <h2>六、受影响行业深度分析</h2>
+
+    <h3>消费电子</h3>
+    <p>苹果是台积电最大客户，iPhone的核心处理器完全由台积电代工。在中等场景下，新一代iPhone的发布可能延迟6个月以上。苹果虽然在积极推动供应链多元化，但先进制程的替代方案在2026年仍不成熟。</p>
+
+    <h3>人工智能与数据中心</h3>
+    <p>英伟达的GPU（H100/B100系列）和AMD的数据中心芯片均依赖台积电先进制程。AI训练和推理算力的扩张将直接受限于芯片供应。考虑到当前AI基础设施投资的爆发性增长，任何供应中断都将导致严重的算力瓶颈。</p>
+
+    <h3>汽车行业</h3>
+    <p>现代汽车每辆使用1000-3000颗芯片。虽然大部分汽车芯片使用成熟制程（非台积电垄断），但ADAS（高级驾驶辅助系统）和车载计算平台需要先进制程。汽车行业刚从2020-2022年芯片荒中恢复，对供应链中断的敏感度极高。</p>
+
+    <h3>国防工业</h3>
+    <p>军事系统中使用的先进芯片同样依赖商业代工供应链。美国国防部已意识到这一风险，但短期内无法建立完全独立的军用芯片供应链。这一事实增加了台海冲突的战略复杂性。</p>
+
+    <h2>七、产能分散化进程：能否改变风险格局</h2>
+
+    <p>全球各主要经济体正在推动半导体产能分散化。以下是主要进展：</p>
+
+    <ul>
+      <li><strong>台积电亚利桑那厂</strong>：一期工厂（4nm）预计2025年量产，二期（3nm/2nm）预计2028年。但初期产能远小于台湾本土。</li>
+      <li><strong>台积电熊本厂</strong>（日本）：聚焦成熟制程（12/16/22/28nm），预计2024年底量产。不覆盖最先进制程。</li>
+      <li><strong>台积电德国厂</strong>：与博世、英飞凌合资，聚焦汽车和工业芯片，预计2027年投产。</li>
+      <li><strong>三星和英特尔</strong>：正在扩大先进制程产能，但良率和技术成熟度仍落后于台积电。</li>
+    </ul>
+
+    <p>综合评估，到2028年前海外产能可能覆盖台积电总产能的10-15%，到2030年可能达到20-25%。这意味着在未来2-4年内，台海冲突的半导体供应链风险不会因产能分散而显著降低。</p>
+
+    <h2>八、给不同角色的建议</h2>
+
+    <h3>企业采购与供应链管理</h3>
+    <ul>
+      <li>建立6-12个月的关键芯片战略库存（成本高但保险价值大）</li>
+      <li>在芯片设计阶段考虑多代工厂兼容性（dual-source设计）</li>
+      <li>将台海风险纳入供应链压力测试标准场景</li>
+    </ul>
+
+    <h3>投资者与风控管理</h3>
+    <ul>
+      <li>监控台海升级概率的日度变化，设定风险预警阈值</li>
+      <li>评估投资组合中对台积电及台湾供应链的直接和间接敞口</li>
+      <li>考虑通过半导体ETF（如SOXX）的看跌期权建立尾部风险对冲</li>
+    </ul>
+
+    <h3>政策制定者</h3>
+    <ul>
+      <li>加速本土先进制程产能建设，但不应期望短期内改变集中度格局</li>
+      <li>建立半导体战略储备机制</li>
+      <li>在国际层面推动降低台海冲突升级风险的外交努力</li>
+    </ul>
+
+    <h2>九、结论</h2>
+
+    <p>台海冲突是全球供应链风险图谱中独特的一环。1.25%的30天升级概率看似很低，但台积电的极端集中度将这一低概率事件转化为全球经济的系统性风险。</p>
+
+    <p>核心数据：军事升级后航运受阻的条件概率为70%，进而影响半导体供应的条件概率为55%。即使是温和场景（类佩洛西访台），也会导致TSM股价短期下跌5%和半导体指数下跌3%。极端场景下，全球先进制程芯片将面临12-18个月的交付延迟。</p>
+
+    <p>在产能分散化尚未改变集中度格局的未来4-5年内，对台海风险的持续监控和预案建设不是可选项，而是供应链管理的必要组成部分。</p>
+
+    <div class="article-cta">
+      <p>获取实时风险数据和定制化分析</p>
+      <a href="../demo.html" class="hero-cta">申请 Demo</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="../demo.html">申请 Demo</a>
+    <a href="../api-docs.html">API 文档</a>
+    <a href="https://github.com/cct15/war-dashboard-data" target="_blank">GitHub</a>
+  </div>
+  <div>Futuristic Fund · Hong Kong</div>
+  <div class="footer-disclaimer">
+    本站内容仅供信息参考，不构成任何投资建议。风险概率基于多源建模，具有固有不确定性。
+  </div>
+</footer>
+
+</body>
+</html>
