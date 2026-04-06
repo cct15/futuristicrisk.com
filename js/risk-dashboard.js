@@ -69,7 +69,7 @@ const HOTSPOTS = {
   israel_palestine: { x: 58.5, y: 31.0, lx: -145, ly: 20,  short: '以巴/黎' },    // ← left-below
   china_taiwan:     { x: 80.2, y: 35.4, lx: 20,   ly: -5,  short: '台海' },       // → right
   india_pakistan:    { x: 67.7, y: 31.9, lx: 20,   ly: 30,  short: '印巴' },       // → right-below
-  us_latam:         { x: 32.9, y: 44.6, lx: 20,   ly: 10,  short: '美-拉美' },    // → right
+  us_latam:         { x: 32.9, y: 44.6, lx: -60,  ly: 20,  short: '美-拉美' },    // ← left-below
 };
 
 // --- Formatting helpers (matching war dashboard _pct / _prob_style) ---
