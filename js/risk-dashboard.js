@@ -62,6 +62,16 @@ const FALLBACK_DATA = {
 // Dot positions (% of map) + label direction + short display name
 // Coordinates: real geography (from map_paths.py HOTSPOTS / 960x480)
 // Label direction chosen to avoid overlap
+// Each conflict gets a unique color for dot-to-card mapping
+const CONFLICT_COLORS = {
+  iran_israel_us:   '#dc2626', // red
+  russia_ukraine:   '#2563eb', // blue
+  israel_palestine: '#ea580c', // orange
+  china_taiwan:     '#7c3aed', // purple
+  india_pakistan:    '#0891b2', // teal
+  us_latam:         '#16a34a', // green
+};
+
 // Red dot positions (real geography from map_paths.py)
 const HOTSPOTS = {
   russia_ukraine:   { x: 57.8, y: 20.8 },
@@ -118,7 +128,8 @@ function renderGlobe(conflicts) {
 
   let html = '';
   for (const [id, pos] of Object.entries(HOTSPOTS)) {
-    html += `<div class="hotspot" style="left:${pos.x}%;top:${pos.y}%;"><div class="hotspot-dot"></div></div>`;
+    const color = CONFLICT_COLORS[id] || '#dc2626';
+    html += `<div class="hotspot" style="left:${pos.x}%;top:${pos.y}%;"><div class="hotspot-dot" style="background:${color};box-shadow:0 0 4px ${color}80;"></div></div>`;
   }
   container.innerHTML = html;
 }
@@ -155,9 +166,10 @@ function renderMapLegend(conflicts) {
       indicators = `<div class="legend-ind">${fmtPct(c.probability_30d)}</div>`;
     }
 
+    const dotColor = CONFLICT_COLORS[id] || '#dc2626';
     html += `
-      <div class="legend-card">
-        <div class="legend-dot"></div>
+      <div class="legend-card" style="border-left:3px solid ${dotColor};">
+        <div class="legend-dot" style="background:${dotColor};"></div>
         <div class="legend-info">
           <div class="legend-name">${name}</div>
           <div class="legend-indicators">${indicators}</div>
