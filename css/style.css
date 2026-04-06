@@ -166,7 +166,7 @@ section { padding: 96px 24px; }
   border: 1px solid var(--border);
 }
 .world-map-svg { width: 100%; display: block; }
-.map-hotspots { position: absolute; inset: 0; }
+.map-hotspots { position: absolute; inset: 0; overflow: visible; }
 .hotspot {
   position: absolute;
   transform: translate(-50%, -50%);
