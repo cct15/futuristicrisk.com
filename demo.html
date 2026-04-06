@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>申请 Demo — Futuristic Risk Intelligence</title>
+  <meta name="description" content="申请 Futuristic Risk Intelligence Demo，了解如何用量化概率+AI监控地缘风险。">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand"><span>FRI</span> Risk Intelligence</a>
+    <ul class="nav-links">
+      <li><a href="/#pain">为什么需要</a></li>
+      <li><a href="/#dashboard">实时风险</a></li>
+      <li><a href="/#cascade">影响分析</a></li>
+      <li><a href="/#solutions">解决方案</a></li>
+      <li><a href="api-docs.html">API 文档</a></li>
+    </ul>
+    <a href="demo.html" class="nav-cta" style="background:var(--accent-hover);">申请 Demo</a>
+  </div>
+</nav>
+
+<section class="demo-page">
+  <div class="container">
+    <div class="demo-intro">
+      <h1 class="section-title" style="text-align:center;">申请 Demo</h1>
+      <p>留下您的信息，我们会在 24 小时内联系您，展示完整的风险情报系统和接入方式。</p>
+    </div>
+
+    <div class="tally-embed">
+      <!--
+        替换说明：在 Tally.so 创建表单后，将下面的 form 替换为：
+        <iframe data-tally-src="https://tally.so/embed/YOUR_FORM_ID?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+                loading="lazy" width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0"
+                title="申请 Demo"></iframe>
+        <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w;s.onload=v;s.onerror=v;d.body.appendChild(s)}</script>
+      -->
+
+      <!-- Fallback form (before Tally setup) -->
+      <form id="demo-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-group">
+          <label for="name">姓名 *</label>
+          <input type="text" id="name" name="name" required placeholder="您的姓名">
+        </div>
+        <div class="form-group">
+          <label for="company">公司/机构 *</label>
+          <input type="text" id="company" name="company" required placeholder="公司名称">
+        </div>
+        <div class="form-group">
+          <label for="email">邮箱 *</label>
+          <input type="email" id="email" name="email" required placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <label for="role">您的角色</label>
+          <select id="role" name="role">
+            <option value="">请选择</option>
+            <option value="fund_manager">基金经理</option>
+            <option value="risk_control">风控</option>
+            <option value="research">研究</option>
+            <option value="cio">CIO / CTO</option>
+            <option value="operations">运营/合规</option>
+            <option value="other">其他</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="usecase">使用场景</label>
+          <select id="usecase" name="usecase">
+            <option value="">请选择</option>
+            <option value="macro_risk">宏观风控</option>
+            <option value="geo_monitoring">地缘风险监控</option>
+            <option value="agent_integration">AI agent 接入</option>
+            <option value="consulting_alt">咨询替代</option>
+            <option value="supply_chain">供应链风控</option>
+            <option value="other">其他</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="notes">补充说明（可选）</label>
+          <textarea id="notes" name="notes" placeholder="您特别关注的风险领域、使用场景等..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">提交申请</button>
+      </form>
+      <p style="color:var(--text-muted); font-size:13px; text-align:center; margin-top:16px;">
+        您的信息仅用于联系沟通，不会分享给第三方。
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="/">首页</a>
+    <a href="api-docs.html">API 文档</a>
+    <a href="https://github.com/cct15/war-dashboard-data" target="_blank">GitHub</a>
+  </div>
+  <div>Futuristic Fund · Hong Kong</div>
+</footer>
+
+</body>
+</html>

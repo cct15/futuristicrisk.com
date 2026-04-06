@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API 文档 — Futuristic Risk Intelligence</title>
+  <meta name="description" content="Futuristic Risk Intelligence MCP/API 接入文档。一键让你的 AI agent 获得地缘风险分析能力。">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand"><span>FRI</span> Risk Intelligence</a>
+    <ul class="nav-links">
+      <li><a href="/#pain">为什么需要</a></li>
+      <li><a href="/#dashboard">实时风险</a></li>
+      <li><a href="/#cascade">影响分析</a></li>
+      <li><a href="/#solutions">解决方案</a></li>
+      <li><a href="api-docs.html">API 文档</a></li>
+    </ul>
+    <a href="demo.html" class="nav-cta">申请 Demo</a>
+  </div>
+</nav>
+
+<section class="docs-page">
+  <div class="container docs-content">
+
+    <h1 class="section-title">API / MCP 接入文档</h1>
+    <p>通过 MCP (Model Context Protocol) 或直接 JSON API，让你的 AI agent 获得实时地缘风险分析能力。</p>
+
+    <!-- Quick Start -->
+    <h2>快速开始</h2>
+
+    <h3>方式一：MCP 接入（推荐）</h3>
+    <p>适用于 Claude Desktop、Cursor 等支持 MCP 的 AI 工具。一键安装：</p>
+    <div class="code-block"><code>pip install war-dashboard-data</code></div>
+
+    <p>在 Claude Desktop 的配置文件中添加：</p>
+    <div class="code-block"><code>{
+  "mcpServers": {
+    "futuristic-risk": {
+      "command": "python3",
+      "args": ["-m", "war_dashboard_data"]
+    }
+  }
+}</code></div>
+
+    <p>配置完成后，你的 AI agent 就可以直接查询地缘风险数据了。试试对 Claude 说：</p>
+    <div class="code-block"><code>"当前全球地缘风险最高的区域是哪里？"
+"伊朗局势升级的概率是多少？"
+"最近 7 天哪些冲突的风险在上升？"</code></div>
+
+    <h3>方式二：JSON API 直接调用</h3>
+    <p>数据以 JSON 格式托管，可直接 HTTP 请求获取：</p>
+    <div class="code-block"><code># 冲突风险数据
+GET https://raw.githubusercontent.com/cct15/war-dashboard-data/main/conflicts.json
+
+# 政治/经济/天灾事件
+GET https://raw.githubusercontent.com/cct15/war-dashboard-data/main/political_events.json</code></div>
+
+    <p>Python 调用示例：</p>
+    <div class="code-block"><code>import json
+import urllib.request
+
+url = "https://raw.githubusercontent.com/cct15/war-dashboard-data/main/conflicts.json"
+data = json.loads(urllib.request.urlopen(url).read())
+
+for conflict in data["conflicts"]:
+    print(f"{conflict['label']}: "
+          f"30d={conflict['probability_30d']:.1%} "
+          f"({conflict['risk_level']})")</code></div>
+
+    <!-- Tools -->
+    <h2>MCP 工具说明</h2>
+
+    <h3><code>get_conflict_risks</code></h3>
+    <p>获取 6 大地缘冲突区域的风险概率。</p>
+    <table class="schema-table">
+      <tr><th>参数</th><th>类型</th><th>说明</th></tr>
+      <tr><td><code>conflict_id</code></td><td>string (可选)</td><td>筛选单个区域：<code>russia_ukraine</code>, <code>iran_israel_us</code>, <code>israel_palestine</code>, <code>china_taiwan</code>, <code>india_pakistan</code>, <code>us_latam</code></td></tr>
+    </table>
+    <p>返回字段：</p>
+    <table class="schema-table">
+      <tr><th>字段</th><th>说明</th></tr>
+      <tr><td><code>conflict_id</code></td><td>冲突区域 ID</td></tr>
+      <tr><td><code>risk_level</code></td><td>风险等级：high / medium / low</td></tr>
+      <tr><td><code>probability_30d</code></td><td>30 天内事件发生概率</td></tr>
+      <tr><td><code>probability_7d</code></td><td>7 天内事件发生概率</td></tr>
+      <tr><td><code>probability_1d</code></td><td>1 天内事件发生概率</td></tr>
+      <tr><td><code>composite_risk_score</code></td><td>综合风险评分</td></tr>
+      <tr><td><code>risk_events[]</code></td><td>细分事件列表（升级/停火/政权更迭/外交）</td></tr>
+      <tr><td><code>risk_events[].change_vs_7d_ago</code></td><td>较 7 天前的概率变化</td></tr>
+    </table>
+
+    <h3><code>get_political_events</code></h3>
+    <p>获取高影响政治、经济、自然灾害事件。</p>
+    <table class="schema-table">
+      <tr><th>参数</th><th>类型</th><th>说明</th></tr>
+      <tr><td><code>category</code></td><td>string (可选)</td><td>筛选类别：<code>political</code>, <code>economic</code>, <code>natural_disaster</code></td></tr>
+    </table>
+    <p>返回字段：</p>
+    <table class="schema-table">
+      <tr><th>字段</th><th>说明</th></tr>
+      <tr><td><code>event_summary</code></td><td>事件描述</td></tr>
+      <tr><td><code>category</code></td><td>类别</td></tr>
+      <tr><td><code>probability</code></td><td>事件发生概率</td></tr>
+      <tr><td><code>deadline</code></td><td>截止日期</td></tr>
+      <tr><td><code>data_confidence</code></td><td>数据置信度：high / medium / low</td></tr>
+    </table>
+
+    <!-- Data Schema -->
+    <h2>数据更新频率</h2>
+    <p>所有数据每日更新一次（UTC 时间约 02:00-04:00）。概率基于多源建模，具有固有不确定性。</p>
+
+    <h2>注册平台</h2>
+    <p>我们的 MCP Server 已上线以下平台：</p>
+    <table class="schema-table">
+      <tr><th>平台</th><th>状态</th></tr>
+      <tr><td>PyPI</td><td>已上线 — <code>pip install war-dashboard-data</code></td></tr>
+      <tr><td>MCP 官方 Registry</td><td>已上线 — <code>io.github.cct15/war-dashboard-data</code></td></tr>
+      <tr><td>Glama</td><td>已上线</td></tr>
+      <tr><td>mcp.so</td><td>已上线</td></tr>
+      <tr><td>GitHub</td><td>已上线</td></tr>
+    </table>
+
+    <div style="text-align:center; margin:64px 0 32px;">
+      <p style="color:var(--text-muted); margin-bottom:20px;">需要更多帮助或定制接入方案？</p>
+      <a href="demo.html" class="hero-cta">联系我们 →</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="/">首页</a>
+    <a href="demo.html">申请 Demo</a>
+    <a href="https://github.com/cct15/war-dashboard-data" target="_blank">GitHub</a>
+  </div>
+  <div>Futuristic Fund · Hong Kong</div>
+</footer>
+
+</body>
+</html>

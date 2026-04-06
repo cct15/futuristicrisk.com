@@ -1,0 +1,41 @@
+name: Deploy FRI Website
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # 每日 UTC 06:00 (北京时间 14:00) 拉取最新风险数据并重新部署
+    - cron: '0 6 * * *'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch latest risk data
+        run: |
+          curl -sf https://raw.githubusercontent.com/cct15/war-dashboard-data/main/conflicts.json > data/sample-risks.json || echo "Failed to fetch, using existing data"
+
+      - name: Update sitemap date
+        run: |
+          sed -i "s/<lastmod>.*<\/lastmod>/<lastmod>$(date +%Y-%m-%d)<\/lastmod>/g" sitemap.xml
+
+      - uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - id: deployment
+        uses: actions/deploy-pages@v4
