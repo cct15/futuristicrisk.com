@@ -259,8 +259,8 @@ function renderExtraRisks(events) {
   const container = document.getElementById('extra-risks');
   if (!container || !events || events.length === 0) return;
 
-  // Only show curated events (supports both field names during CDN transition)
-  const curated = events.filter(e => e.importance === 'high' || e.curated === true);
+  // Only show high-importance events (matches daily report editorial filter)
+  const curated = events.filter(e => e.importance === 'high');
 
   // Group by category
   const groups = {};
@@ -321,8 +321,8 @@ async function loadRiskDashboard() {
   renderGlobe(conflicts);
   renderMapLegend(conflicts);
 
-  // Render full conflict sections — only featured conflicts (matches daily report filter)
-  const featured = conflicts.filter(c => c.featured !== false);
+  // Render full conflict sections — only high-importance conflicts (matches daily report filter)
+  const featured = conflicts.filter(c => c.importance === 'high');
   const dashEl = document.getElementById('risk-dashboard');
   if (dashEl) {
     dashEl.innerHTML = featured.map(renderCard).join('');

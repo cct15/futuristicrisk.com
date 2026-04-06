@@ -84,6 +84,7 @@ for conflict in data["conflicts"]:
     <table class="schema-table">
       <tr><th>字段</th><th>说明</th></tr>
       <tr><td><code>conflict_id</code></td><td>冲突区域 ID</td></tr>
+      <tr><td><code>importance</code></td><td>编辑推荐等级：<code>high</code>（当前主要矛盾，建议展示）/ <code>low</code>（概率低或无活跃事件，数据完整性保留）</td></tr>
       <tr><td><code>risk_level</code></td><td>风险等级：high / medium / low</td></tr>
       <tr><td><code>probability_30d</code></td><td>30 天内事件发生概率</td></tr>
       <tr><td><code>probability_7d</code></td><td>7 天内事件发生概率</td></tr>
@@ -105,6 +106,7 @@ for conflict in data["conflicts"]:
       <tr><td><code>event_summary</code></td><td>事件描述</td></tr>
       <tr><td><code>category</code></td><td>类别</td></tr>
       <tr><td><code>probability</code></td><td>事件发生概率</td></tr>
+      <tr><td><code>importance</code></td><td>编辑推荐等级：<code>high</code>（建议展示）/ <code>low</code>（数据完整性保留）</td></tr>
       <tr><td><code>deadline</code></td><td>截止日期</td></tr>
       <tr><td><code>data_confidence</code></td><td>数据置信度：high / medium / low</td></tr>
     </table>
