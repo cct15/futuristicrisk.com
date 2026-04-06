@@ -202,7 +202,7 @@ section { padding: 96px 24px; }
 /* Label placement — large offsets to clear the dot and other labels */
 .hotspot-right {
   left: 14px;
-  top: -20px;
+  top: -14px;
 }
 .hotspot-left {
   right: 14px;
@@ -210,7 +210,7 @@ section { padding: 96px 24px; }
 }
 .hotspot-below {
   left: 14px;
-  top: 10px;
+  top: 16px;
 }
 .hotspot-name {
   font-size: 9px;
