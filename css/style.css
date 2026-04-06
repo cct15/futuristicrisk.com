@@ -199,21 +199,18 @@ section { padding: 96px 24px; }
   z-index: 3;
   pointer-events: none;
 }
-/* Label placement directions */
+/* Label placement — large offsets to clear the dot and other labels */
 .hotspot-right {
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
+  left: 14px;
+  top: -20px;
 }
 .hotspot-left {
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 14px;
+  top: -4px;
 }
 .hotspot-below {
-  left: 50%;
-  top: 12px;
-  transform: translateX(-50%);
+  left: 14px;
+  top: 10px;
 }
 .hotspot-name {
   font-size: 9px;
