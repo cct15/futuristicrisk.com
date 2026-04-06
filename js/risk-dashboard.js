@@ -259,9 +259,12 @@ function renderExtraRisks(events) {
   const container = document.getElementById('extra-risks');
   if (!container || !events || events.length === 0) return;
 
+  // Only show curated events (matching daily report editorial filter)
+  const curated = events.filter(e => e.curated !== false);
+
   // Group by category
   const groups = {};
-  for (const e of events) {
+  for (const e of curated) {
     const cat = e.category || 'other';
     if (!groups[cat]) groups[cat] = [];
     groups[cat].push(e);
