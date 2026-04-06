@@ -59,15 +59,14 @@ const FALLBACK_DATA = {
 };
 
 // Map hotspot positions (% of 960x480 viewBox) + label offsets (matching war dashboard)
-// Dot positions (% of map) + label placement direction
-// dir: 'right' = label to right of dot, 'left' = label to left, 'below' = below dot
+// Dot positions (% of map) + label direction + short display name
 const HOTSPOTS = {
-  russia_ukraine:   { x: 57.8, y: 18,  dir: 'right' },
-  iran_israel_us:   { x: 61,   y: 27,  dir: 'right' },
-  israel_palestine: { x: 54,   y: 35,  dir: 'left' },
-  china_taiwan:     { x: 80,   y: 33,  dir: 'right' },
-  india_pakistan:    { x: 69,   y: 42,  dir: 'below' },
-  us_latam:         { x: 33,   y: 46,  dir: 'right' },
+  russia_ukraine:   { x: 56, y: 14,  dir: 'right', short: '俄乌' },
+  iran_israel_us:   { x: 59, y: 28,  dir: 'right', short: '伊朗-美以' },
+  israel_palestine: { x: 53, y: 38,  dir: 'left',  short: '以巴/黎' },
+  china_taiwan:     { x: 78, y: 30,  dir: 'right', short: '台海' },
+  india_pakistan:    { x: 67, y: 46,  dir: 'right', short: '印巴' },
+  us_latam:         { x: 31, y: 50,  dir: 'right', short: '美-拉美' },
 };
 
 // --- Formatting helpers (matching war dashboard _pct / _prob_style) ---
@@ -122,8 +121,8 @@ function renderGlobe(conflicts) {
     const escP = esc ? fmtPct(esc.probability_30d) : null;
     const cfP = cf ? fmtPct(cf.probability_30d) : null;
 
-    // Full name (matching war dashboard)
-    const name = CONFLICT_NAMES[id] || id;
+    // Short name for map label (full names are too wide and overlap)
+    const name = pos.short || CONFLICT_NAMES[id] || id;
 
     let indicators = '';
     if (escP) indicators += `<span class="globe-esc">⚔ ${escP}</span>`;
