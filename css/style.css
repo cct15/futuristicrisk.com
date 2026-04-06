@@ -307,10 +307,14 @@ section { padding: 96px 24px; }
   margin-bottom: 16px;
 }
 .prob-card {
-  background: var(--bg-alt);
+  background: var(--bg-card);
   border-radius: 10px;
   padding: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  transition: box-shadow .2s;
 }
+.prob-card:hover { box-shadow: var(--shadow); }
 .prob-header {
   display: flex;
   justify-content: space-between;
@@ -324,20 +328,21 @@ section { padding: 96px 24px; }
 }
 .prob-badge {
   display: inline-block;
-  padding: 2px 10px;
+  padding: 3px 12px;
   border-radius: 9999px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #fff;
   letter-spacing: 0.03em;
 }
 .prob-value {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 4px;
   font-variant-numeric: tabular-nums;
   font-family: "SF Mono", "Fira Code", "Menlo", monospace;
+  /* color is set inline by JS via probStyle */
 }
 .prob-sub {
   font-size: 11px;
@@ -345,29 +350,30 @@ section { padding: 96px 24px; }
   margin-bottom: 8px;
 }
 .bar-bg {
-  height: 5px;
-  background: rgba(0,0,0,.06);
+  height: 6px;
+  background: rgba(0,0,0,.08);
   border-radius: 3px;
   overflow: hidden;
   min-width: 80px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .bar-fill {
   height: 100%;
   border-radius: 3px;
+  transition: width .6s ease;
 }
 .prob-deltas {
   display: flex;
-  gap: 12px;
-  font-size: 11px;
+  justify-content: space-between;
+  font-size: 12px;
   color: var(--text-light);
 }
 .delta-group { display: inline-flex; gap: 4px; align-items: center; }
-.delta { font-weight: 600; font-size: 11px; }
-.delta-up { color: #dc2626; }
-.delta-down { color: #16a34a; }
-.delta-flat { color: var(--text-light); }
-.delta-na { color: var(--text-light); }
+.delta, .prob-delta { font-weight: 700; font-size: 12px; }
+.delta-up, .prob-delta-up { color: #dc2626; }
+.delta-down, .prob-delta-down { color: #16a34a; }
+.delta-flat, .prob-delta-flat { color: var(--text-light); }
+.delta-na, .prob-delta-na { color: var(--text-light); }
 .near-term {
   margin-top: 8px;
   padding-top: 6px;
