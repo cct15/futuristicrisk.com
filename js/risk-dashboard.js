@@ -120,6 +120,71 @@ function deltaHTML(change) {
   return '<span class="prob-delta prob-delta-flat">0</span>';
 }
 
+// --- Conflict section card (full: briefing + prob cards + risk impact) ---
+
+function renderCard(c) {
+  const name = c.label_cn || CONFLICT_NAMES[c.conflict_id] || c.label;
+  const events = (c.risk_events || []).filter(e => e.event_type !== 'other');
+  const typeOrder = { escalation: 0, ceasefire_cancel: 1, regime_change: 2, diplomatic: 3, ceasefire: 4 };
+  events.sort((a, b) => (typeOrder[a.event_type] ?? 99) - (typeOrder[b.event_type] ?? 99));
+
+  // Prob cards
+  let probCards = '';
+  for (const e of events) {
+    const p30 = e.probability_30d || 0;
+    if (p30 < 0.005) continue;
+    const { color, label: probLabel } = probStyle(p30, e.event_type);
+    const icon = EVENT_ICONS[e.event_type] || '';
+    const typeCN = EVENT_CN[e.event_type] || e.event_type;
+    const barPct = Math.min(p30 / 0.50 * 100, 100);
+    const d7 = deltaHTML(e.change_vs_7d_ago);
+    probCards += `
+      <div class="prob-card">
+        <div class="prob-header">
+          <span class="prob-type">${icon} ${typeCN}</span>
+          <span class="prob-badge" style="background:${color}">${probLabel}</span>
+        </div>
+        <div class="prob-value" style="color:${color}">${fmtPct(p30)}</div>
+        <div class="prob-sub">未来30天概率</div>
+        <div class="bar-bg"><div class="bar-fill" style="width:${barPct.toFixed(1)}%;background:${color}"></div></div>
+        <div class="prob-deltas">
+          <span class="delta-group">7日 ${fmtPct(e.probability_7d)} · 24h ${fmtPct(e.probability_1d)}</span>
+          <span class="delta-group">周变化 ${d7}</span>
+        </div>
+      </div>`;
+  }
+
+  // Situation briefing
+  const briefing = c.situation_briefing
+    ? `<p class="situation-briefing">${c.situation_briefing}</p>`
+    : '';
+
+  // Risk impact
+  let impactHTML = '';
+  const impact = c.risk_impact;
+  if (impact && (impact.industries?.length || impact.assets?.length || impact.channels?.length)) {
+    let rows = '';
+    if (impact.industries?.length) {
+      rows += `<div class="impact-row"><span class="impact-label">影响行业</span>${impact.industries.map(i => `<span class="impact-tag impact-industry">${i}</span>`).join(' ')}</div>`;
+    }
+    if (impact.assets?.length) {
+      rows += `<div class="impact-row"><span class="impact-label">关注资产</span>${impact.assets.map(a => `<span class="impact-tag impact-asset">${a}</span>`).join(' ')}</div>`;
+    }
+    if (impact.channels?.length) {
+      rows += `<div class="impact-row"><span class="impact-label">传导路径</span>${impact.channels.map(ch => `<span class="impact-channel">${ch}</span>`).join(' ')}</div>`;
+    }
+    impactHTML = `<div class="risk-impact">${rows}</div>`;
+  }
+
+  return `
+    <section class="conflict-section">
+      <div class="section-header"><h2>${name}</h2></div>
+      ${briefing}
+      <div class="prob-grid">${probCards}</div>
+      ${impactHTML}
+    </section>`;
+}
+
 // --- Map: red dots only (no text labels on map) ---
 
 function renderGlobe(conflicts) {
@@ -200,6 +265,12 @@ async function loadRiskDashboard() {
   // Render map dots + legend grid
   renderGlobe(conflicts);
   renderMapLegend(conflicts);
+
+  // Render full conflict sections (briefing + prob cards + risk impact)
+  const dashEl = document.getElementById('risk-dashboard');
+  if (dashEl) {
+    dashEl.innerHTML = conflicts.map(renderCard).join('');
+  }
 
   const tsEl = document.getElementById('risk-updated');
   if (tsEl && data.metadata && data.metadata.updated_at) {
