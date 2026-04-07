@@ -762,7 +762,65 @@ section { padding: 96px 24px; }
   background: var(--bg-card);
 }
 
-/* ===== Tiers ===== */
+/* ===== Pricing ===== */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+.pricing-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 28px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+.pricing-card.featured { border-color: var(--accent); box-shadow: 0 2px 12px rgba(0,102,204,.12); position: relative; }
+.pricing-card.featured::before {
+  content: '推荐';
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 10px;
+}
+.pricing-tier { font-size: 14px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+.pricing-price { font-size: 36px; font-weight: 800; color: var(--text); margin: 8px 0 4px; }
+.pricing-period { font-size: 16px; font-weight: 400; color: var(--text-muted); }
+.pricing-desc { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; }
+.pricing-features { list-style: none; flex: 1; }
+.pricing-features li {
+  padding: 5px 0; font-size: 13px; color: var(--text-muted); display: flex; gap: 8px; align-items: baseline;
+}
+.pricing-features li::before { content: '✓'; color: var(--accent); flex-shrink: 0; font-weight: 700; }
+.pricing-features li.pricing-note { color: var(--text-light); font-style: italic; }
+.pricing-features li.pricing-note::before { content: '·'; color: var(--text-light); }
+.pricing-cta {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.pricing-cta:hover { color: var(--accent-hover); }
+.pricing-custom {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* Keep old tier styles for backward compat */
 .tiers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -899,6 +957,7 @@ section { padding: 96px 24px; }
   .risk-grid { grid-template-columns: 1fr !important; }
   .compact-row { grid-template-columns: 1fr; }
   .tiers-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
   .impact-body { grid-template-columns: 1fr; }
   .news-item { flex-direction: column; gap: 8px; }
   .news-date { flex: none; }
