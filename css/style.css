@@ -478,6 +478,14 @@ section { padding: 96px 24px; }
 }
 .extra-deadline { color: var(--text-muted); }
 .extra-confidence { color: var(--text-light); }
+.extra-impact { margin-top: 6px; }
+.extra-impact-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 4px; }
+.extra-impact-channels { display: flex; flex-direction: column; gap: 2px; }
+.extra-impact-channel {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
 
 .risk-footer {
   text-align: center;

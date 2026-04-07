@@ -282,12 +282,25 @@ function renderExtraRisks(events) {
       const deadline = e.deadline ? `<span class="extra-deadline">截止 ${e.deadline}</span>` : '';
       const conf = e.data_confidence === 'high' ? '高' : e.data_confidence === 'medium' ? '中' : '低';
 
+      // Render risk impact if available
+      let impactHTML = '';
+      const impact = e.risk_impact;
+      if (impact && (impact.industries?.length || impact.assets?.length || impact.channels?.length)) {
+        let tags = '';
+        if (impact.industries?.length) tags += impact.industries.map(i => `<span class="impact-tag impact-industry">${i}</span>`).join(' ');
+        if (impact.assets?.length) tags += impact.assets.map(a => `<span class="impact-tag impact-asset">${a}</span>`).join(' ');
+        let channels = '';
+        if (impact.channels?.length) channels = `<div class="extra-impact-channels">${impact.channels.map(ch => `<span class="extra-impact-channel">→ ${ch}</span>`).join('')}</div>`;
+        impactHTML = `<div class="extra-impact">${tags ? '<div class="extra-impact-tags">' + tags + '</div>' : ''}${channels}</div>`;
+      }
+
       eventsHTML += `
         <li class="extra-event-item">
           <span class="extra-event-prob" style="color:${color}">${fmtPct(p)}</span>
           <div class="extra-event-content">
             <span class="extra-event-headline">${e.event_summary || ''}</span>
             <div class="extra-event-meta">${deadline}<span class="extra-confidence">置信度: ${conf}</span></div>
+            ${impactHTML}
           </div>
         </li>`;
     }
