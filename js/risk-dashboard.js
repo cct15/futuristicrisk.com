@@ -145,7 +145,7 @@ function renderCard(c) {
           <span class="prob-badge" style="background:${color}">${probLabel}</span>
         </div>
         <div class="prob-value" style="color:${color}">${fmtPct(p30)}</div>
-        <div class="prob-sub">未来30天概率</div>
+        <div class="prob-sub">未来30天概率${e.event_note ? ' · ' + e.event_note : ''}</div>
         <div class="bar-bg"><div class="bar-fill" style="width:${barPct.toFixed(1)}%;background:${color}"></div></div>
         <div class="prob-deltas">
           <span class="delta-group">7日 ${fmtPct(e.probability_7d)} · 24h ${fmtPct(e.probability_1d)}</span>
