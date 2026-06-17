@@ -6,6 +6,7 @@ on:
   schedule:
     # 每日 UTC 06:00 (北京时间 14:00) 拉取最新风险数据并重新部署
     - cron: '0 6 * * *'
+  workflow_dispatch:  # 手动触发（计划任务因 60 天无提交被禁用后可手动重新部署）
 
 permissions:
   contents: read
