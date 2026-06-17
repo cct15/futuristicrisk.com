@@ -1,0 +1,34 @@
+name: Keepalive
+
+# GitHub auto-disables a repo's scheduled workflows after 60 days with no commit
+# activity. The deploy workflow never commits (it only builds + deploys Pages), so
+# the repo went inactive and the daily data-refresh deploy was silently disabled on
+# 2026-06-16. This workflow makes a weekly REAL commit to reset the 60-day inactivity
+# timer, keeping every scheduled workflow alive. The push also triggers deploy.yml
+# (on: push), refreshing the live site's risk data.
+#
+# IMPORTANT: it must use a PAT (secrets.KEEPALIVE_TOKEN) — commits made with the
+# default GITHUB_TOKEN do NOT reset the inactivity timer and do NOT trigger other
+# workflows. Until the secret is added this job will no-op/fail harmlessly.
+
+on:
+  schedule:
+    - cron: '17 5 * * 1'   # Mondays 05:17 UTC (well within the 60-day window)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.KEEPALIVE_TOKEN }}
+      - name: Weekly keepalive commit
+        run: |
+          git config user.name  "fri-keepalive"
+          git config user.email "keepalive@futuristicrisks.com"
+          git commit --allow-empty -m "chore: weekly keepalive $(date -u +%F)"
+          git push
